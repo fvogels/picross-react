@@ -1,0 +1,15 @@
+.square {
+    border: 1px solid black;
+}
+
+.empty {
+    background: white;
+}
+
+.filled {
+    background: black;
+}
+
+.unknown {
+    background: gray;
+}
