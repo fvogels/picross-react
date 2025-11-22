@@ -1,35 +1,19 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 import './App.css';
-import PuzzleView from './components/PuzzleView';
+import PlayablePuzzleView from './components/PlayablePuzzleView';
 import { createConstraintsList } from './domain/play/constraint';
 import { Puzzle } from './domain/play/puzzle';
-import { rangeSelection as positionsInRange } from './util';
-import type { Position } from './util/position';
 
 
 export default function App(): React.ReactNode
 {
-    const [puzzle, setPuzzle] = useState(createPuzzle());
+    const puzzle = useMemo(createPuzzle, []);
 
     return (
         <>
-            <PuzzleView puzzle={puzzle} />
+            <PlayablePuzzleView puzzle={puzzle} />
         </>
     );
-
-
-    function onRangeSelected(startPosition: Position, endPosition: Position, mode: 'filled' | 'empty' | 'unknown'): void
-    {
-        const selectedPositions = positionsInRange(startPosition, endPosition);
-        let updatedPuzzle = puzzle;
-
-        for ( const selectedPosition of selectedPositions )
-        {
-            updatedPuzzle = updatedPuzzle.update(selectedPosition, mode);
-        }
-
-        setPuzzle(updatedPuzzle);
-    }
 }
 
 function createPuzzle(): Puzzle
