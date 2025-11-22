@@ -1,6 +1,6 @@
 .square {
-    border: 1px solid black;
     user-select: none;
+    margin: 1px;
 }
 
 .empty {
