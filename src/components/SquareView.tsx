@@ -28,7 +28,6 @@ export default function SquareView(props: Props): React.ReactNode
 
     function onMouseDown(event: React.MouseEvent<HTMLDivElement, MouseEvent>)
     {
-        console.log('mouse down', event)
         switch ( event.button )
         {
             case 0:
