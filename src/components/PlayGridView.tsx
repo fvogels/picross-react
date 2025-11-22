@@ -1,5 +1,5 @@
 import { createSelectionIndexer, range } from "@/util";
-import type { Grid } from "@/util/grid";
+import type { PersistentGrid } from "@/util/grid";
 import { Position } from "@/util/position";
 import { useState } from "react";
 import classes from './PlayGridView.module.css';
@@ -8,7 +8,7 @@ import SquareView from "./SquareView";
 
 interface Props
 {
-    grid: Grid<Square>;
+    grid: PersistentGrid<Square>;
 }
 
 export interface Square
