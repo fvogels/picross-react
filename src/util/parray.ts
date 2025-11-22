@@ -37,4 +37,9 @@ export class PersistentArray<T>
         copy[index] = newValue;
         return new PersistentArray<T>(copy);
     }
+
+    get data() : T[]
+    {
+        return this.items;
+    }
 }
