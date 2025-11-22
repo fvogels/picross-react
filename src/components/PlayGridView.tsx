@@ -1,8 +1,9 @@
-import { range } from "@/util";
+import { createSelectionIndexer, range } from "@/util";
 import type { Grid } from "@/util/grid";
-import classes from './PlayGridView.module.css'
-import SquareView from "./SquareView";
 import { Position } from "@/util/position";
+import { useState } from "react";
+import classes from './PlayGridView.module.css';
+import SquareView from "./SquareView";
 
 
 interface Props
@@ -18,6 +19,9 @@ export interface Square
 export default function PlayGridView(props: Props): React.ReactNode
 {
     const { grid } = props;
+    const [ selectionStart, setSelectionStart ] = useState<Position | null>(null);
+    const [ selectionEnd, setSelectionEnd ] = useState<Position | null>(null);
+    const indexer = createIndexer();
 
     return (
         <div className={classes.rows}>
@@ -25,6 +29,16 @@ export default function PlayGridView(props: Props): React.ReactNode
         </div>
     );
 
+
+    function createIndexer(): (position: Position) => number | null
+    {
+        if ( selectionStart === null || selectionEnd === null )
+        {
+            return () => null;
+        }
+
+        return createSelectionIndexer(selectionStart, selectionEnd);
+    }
 
     function renderRow(row: number): React.ReactNode
     {
@@ -39,9 +53,17 @@ export default function PlayGridView(props: Props): React.ReactNode
     {
         const position = new Position(x, y);
         const square = grid.at(position);
+        const selectionIndex = indexer(position);
+        const caption: string | undefined = selectionIndex === null ? undefined : `${selectionIndex}`;
 
         return (
-            <SquareView status={square.status} />
+            <SquareView
+                status={square.status}
+                caption={caption}
+                onLeftPressed={() => { setSelectionStart(position); setSelectionEnd(position); } }
+                onLeftDragged={() => setSelectionEnd(position) }
+                onLeftReleased={() => { setSelectionStart(null); setSelectionEnd(null); }}
+                 />
         );
     }
 }
