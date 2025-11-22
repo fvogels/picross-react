@@ -1,15 +1,19 @@
 .square {
     border: 1px solid black;
+    user-select: none;
 }
 
 .empty {
     background: white;
+    color: black;
 }
 
 .filled {
     background: black;
+    color: white;
 }
 
 .unknown {
     background: gray;
+    color: black;
 }
