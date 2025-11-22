@@ -28,13 +28,16 @@ export default function SquareView(props: Props): React.ReactNode
 
     function onMouseDown(event: React.MouseEvent<HTMLDivElement, MouseEvent>)
     {
-        if ( (event.buttons & 1) !== 0 )
+        console.log('mouse down', event)
+        switch ( event.button )
         {
-            props.onLeftPressed?.();
-        }
-        else if ( (event.buttons & 2) !== 0 )
-        {
-            props.onRightPressed?.();
+            case 0:
+                props.onLeftPressed?.();
+                break;
+
+            case 2:
+                props.onRightPressed?.();
+                break;
         }
 
         event.preventDefault();
@@ -42,13 +45,15 @@ export default function SquareView(props: Props): React.ReactNode
 
     function onMouseUp(event: React.MouseEvent<HTMLDivElement, MouseEvent>)
     {
-        if ( (event.buttons & 1) !== 0 )
+        switch ( event.button )
         {
-            props.onLeftReleased?.();
-        }
-        else if ( (event.buttons & 2) !== 0 )
-        {
-            props.onRightReleased?.();
+            case 0:
+                props.onLeftReleased?.();
+                break;
+
+            case 2:
+                props.onRightReleased?.();
+                break;
         }
 
         event.preventDefault();
@@ -56,14 +61,17 @@ export default function SquareView(props: Props): React.ReactNode
 
     function onMouseEnter(event: React.MouseEvent<HTMLDivElement, MouseEvent>)
     {
-        if ( (event.buttons & 1) !== 0 )
+        switch ( event.button )
         {
-            props.onLeftDragged?.();
+            case 0:
+                props.onLeftDragged?.();
+                break;
+
+            case 2:
+                props.onRightDragged?.();
+                break;
         }
-        else if ( (event.buttons & 2) !== 0 )
-        {
-            props.onRightDragged?.();
-        }
+
 
         event.preventDefault();
     }
