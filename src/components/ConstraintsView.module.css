@@ -1,0 +1,24 @@
+.constraints {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.horizontal {
+    flex-direction: row;
+}
+
+.vertical {
+    flex-direction: column;
+}
+
+.satisfied {
+    background: #AFA;
+}
+
+.unsatisfied {
+    background: #AAA;
+}
+
+.violated {
+    background: #FAA;
+}
