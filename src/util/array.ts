@@ -1,7 +1,14 @@
 import { range } from ".";
 
 
-export class PersistentArray<T>
+export interface IArray<T>
+{
+    get length(): number;
+
+    at(index: number): T;
+}
+
+export class PersistentArray<T> implements IArray<T>
 {
     private readonly items: T[];
 
