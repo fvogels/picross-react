@@ -25,7 +25,7 @@ export function indexOf<T>(xs: T[], predicate: (t: T) => boolean): number | null
     return null;
 }
 
-export function rangeSelection(start: Position, end: Position): Position[]
+export function positionsInRange(start: Position, end: Position): Position[]
 {
     const dx = Math.abs(end.x - start.x);
     const dy = Math.abs(end.y - start.y);
