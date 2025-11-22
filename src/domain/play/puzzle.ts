@@ -1,8 +1,8 @@
+import { type PersistentArray } from "@/util/array";
 import { PersistentGrid } from "@/util/grid";
-import type { Square, SquareStatus } from "./square";
-import type { PersistentArray } from "@/util/array";
-import type { Constraints } from "./constraint";
 import type { Position } from "@/util/position";
+import type { Constraints } from "./constraint";
+import type { Square, SquareStatus } from "./square";
 
 
 export class Puzzle
