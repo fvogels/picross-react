@@ -9,10 +9,17 @@ export interface Constraint
 
 export type Satisfaction = 'satisfied' | 'unsatisfied' | 'violated';
 
-export interface Constraints
+export class Constraints
 {
-    constraints: PersistentArray<Constraint>;
-    satisfaction: Satisfaction;
+    public readonly constraints: PersistentArray<Constraint>;
+
+    public readonly satisfaction: Satisfaction;
+
+    constructor(constraints: PersistentArray<Constraint>, satisfaction: Satisfaction)
+    {
+        this.constraints = constraints;
+        this.satisfaction = satisfaction;
+    }
 }
 
 export function createConstraints(values: number[]): Constraints
@@ -27,3 +34,4 @@ export function createConstraintsList(...constraints: number[][]): PersistentArr
 {
     return PersistentArray.fromArray(constraints.map(createConstraints));
 }
+
