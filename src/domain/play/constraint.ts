@@ -1,5 +1,6 @@
 import { PersistentArray } from "@/util/parray";
 
+
 export interface Constraint
 {
     value: number;
@@ -10,7 +11,7 @@ export type Satisfaction = 'satisfied' | 'unsatisfied' | 'violated';
 
 export interface Constraints
 {
-    contents: PersistentArray<Constraint>;
+    constraints: PersistentArray<Constraint>;
     satisfaction: Satisfaction;
 }
 
@@ -19,7 +20,7 @@ export function createConstraints(values: number[]): Constraints
     const contents: PersistentArray<Constraint> = PersistentArray.fromArray(values.map(value => ({ value, satisfaction: 'unsatisfied' })));
     const satisfaction: Satisfaction = 'unsatisfied';
 
-    return { contents, satisfaction };
+    return { constraints: contents, satisfaction };
 }
 
 export function createConstraintsList(...constraints: number[][]): PersistentArray<Constraints>
