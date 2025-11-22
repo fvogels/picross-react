@@ -10,7 +10,7 @@ import React from "react";
 interface Props
 {
     grid: PersistentGrid<Square>;
-    onRangeSelected?: (startPosition: Position, endPosition: Position, mode: 'filled' | 'empty') => void;
+    onRangeSelected?: (startPosition: Position, endPosition: Position, mode: 'filled' | 'empty' | 'unknown') => void;
 }
 
 export interface Square
@@ -65,7 +65,7 @@ export default function PlayGridView(props: Props): React.ReactNode
                     caption={caption}
                     onLeftPressed={() => onStartSelection(position) }
                     onLeftDragged={() => onUpdateSelection(position) }
-                    onLeftReleased={() => onEndSelection('filled')}
+                    onLeftReleased={(modifier: boolean) => onEndSelection(modifier ? 'unknown' : 'filled')}
                     onRightPressed={() => onStartSelection(position)}
                     onRightDragged={() => onUpdateSelection(position)}
                     onRightReleased={() => onEndSelection('empty')}
@@ -85,10 +85,8 @@ export default function PlayGridView(props: Props): React.ReactNode
         setSelectionEnd(position);
     }
 
-    function onEndSelection(mode: 'filled' | 'empty'): void
+    function onEndSelection(mode: 'filled' | 'empty' | 'unknown'): void
     {
-        console.log('ending selection');
-
         if ( selectionStart !== null && selectionEnd !== null )
         {
             props.onRangeSelected?.(selectionStart, selectionEnd, mode);
