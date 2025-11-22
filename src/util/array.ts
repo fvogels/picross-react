@@ -38,6 +38,11 @@ export class PersistentArray<T> implements IArray<T>
 
     at(index: number): T
     {
+        if ( index < 0 || index >= this.length )
+        {
+            throw new Error(`index out of bounds: ${index} (len=${this.length})`);
+        }
+
         return this.items[index];
     }
 
@@ -73,6 +78,11 @@ export class VirtualArray<T> implements IArray<T>
 
     at(index: number): T
     {
+        if ( index < 0 || index >= this.length )
+        {
+            throw new Error(`index out of bounds: ${index}`);
+        }
+
         return this.valueFunction(index);
     }
 
