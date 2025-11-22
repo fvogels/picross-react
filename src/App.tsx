@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import PlayGridView from './components/PlayGridView';
+import PuzzleView from './components/PuzzleView';
 import { createConstraintsList } from './domain/play/constraint';
 import { Puzzle } from './domain/play/puzzle';
 import { rangeSelection as positionsInRange } from './util';
@@ -13,7 +13,7 @@ export default function App(): React.ReactNode
 
     return (
         <>
-            <PlayGridView grid={puzzle.grid} onRangeSelected={onRangeSelected} />
+            <PuzzleView puzzle={puzzle} />
         </>
     );
 
@@ -35,15 +35,15 @@ export default function App(): React.ReactNode
 function createPuzzle(): Puzzle
 {
     const rowConstraints = createConstraintsList(
-        [1],
+        [1, 1],
         [2],
         [3],
         [2],
         [1],
     );
     const columnConstraints = createConstraintsList(
-        [1],
-        [2],
+        [1, 1],
+        [3, 1],
         [3],
         [2],
         [1],

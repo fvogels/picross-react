@@ -1,5 +1,5 @@
 import type { PersistentGrid } from "@/util/grid";
-import type { PersistentArray } from "@/util/parray";
+import type { PersistentArray } from "@/util/array";
 import type { Constraints } from "./ConstraintsView";
 import ConstraintsView from "./ConstraintsView";
 import type { Square } from "./PlayGridView";

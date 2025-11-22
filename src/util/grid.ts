@@ -1,4 +1,4 @@
-import { PersistentArray } from "./parray";
+import { PersistentArray } from "./array";
 import { Position } from "./position";
 
 

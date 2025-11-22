@@ -1,4 +1,4 @@
-import { PersistentArray } from "@/util/parray";
+import { PersistentArray } from "@/util/array";
 
 
 export interface Constraint

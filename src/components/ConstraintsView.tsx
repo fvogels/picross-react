@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './ConstraintsView.module.css';
 import ConstraintView, { type Constraint } from './ConstraintView';
-import type { PersistentArray } from '@/util/parray';
+import type { PersistentArray } from '@/util/array';
 
 
 interface Props
