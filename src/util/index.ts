@@ -83,7 +83,6 @@ export function createSelectionIndexer(start: Position, end: Position): (p: Posi
         {
             // Right to left
             return (p: Position) => {
-                console.log(`R2L ${p} ${start} ${end}`)
                 if ( p.y !== start.y || p.x < end.x || p.x > start.x )
                 {
                     return null;
