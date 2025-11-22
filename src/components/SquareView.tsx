@@ -8,7 +8,7 @@ interface Props
 
     onLeftPressed?: () => void;
     onLeftDragged?: () => void;
-    onLeftReleased?: () => void;
+    onLeftReleased?: (modifier: boolean) => void;
 
     onRightPressed?: () => void;
     onRightDragged?: () => void;
@@ -47,7 +47,7 @@ export default function SquareView(props: Props): React.ReactNode
         switch ( event.button )
         {
             case 0:
-                props.onLeftReleased?.();
+                props.onLeftReleased?.(event.ctrlKey);
                 break;
 
             case 2:
