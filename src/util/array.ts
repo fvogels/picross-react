@@ -6,6 +6,8 @@ export interface IArray<T>
     get length(): number;
 
     at(index: number): T;
+
+    get data(): T[];
 }
 
 export class PersistentArray<T> implements IArray<T>
