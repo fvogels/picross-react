@@ -1,4 +1,4 @@
-import type { Position } from "./position";
+import { Position } from "./position";
 
 export function range(start: number, stop: number): number[]
 {
@@ -23,6 +23,40 @@ export function indexOf<T>(xs: T[], predicate: (t: T) => boolean): number | null
     }
 
     return null;
+}
+
+export function rangeSelection(start: Position, end: Position): Position[]
+{
+    const dx = Math.abs(end.x - start.x);
+    const dy = Math.abs(end.y - start.y);
+    const result: Position[] = [];
+
+    if ( dx >= dy )
+    {
+        // Horizontal selection
+        const y = start.y;
+        const xStart = Math.min(start.x, end.x);
+        const xEnd = Math.max(start.x, end.x);
+
+        for ( let i = xStart; i <= xEnd; ++i )
+        {
+            result.push(new Position(i, y));
+        }
+    }
+    else
+    {
+        // Vertical selection
+        const x = start.x;
+        const yStart = Math.min(start.y, end.y);
+        const yEnd = Math.max(start.y, end.y);
+
+        for ( let i = yStart; i <= yEnd; ++i )
+        {
+            result.push(new Position(x, i));
+        }
+    }
+
+    return result;
 }
 
 export function createSelectionIndexer(start: Position, end: Position): (p: Position) => number | null
