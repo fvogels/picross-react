@@ -1,4 +1,4 @@
-import { PersistentArray } from "./array";
+import { PersistentArray, VirtualArray, type IArray } from "./array";
 import { Position } from "./position";
 
 
@@ -40,5 +40,15 @@ export class PersistentGrid<T>
         const updatedGrid = this.grid.update(position.y, updatedRow);
 
         return new PersistentGrid<T>(updatedGrid);
+    }
+
+    row(y: number): IArray<T>
+    {
+        return VirtualArray.create<T>(this.width, x => this.at(new Position(x, y)));
+    }
+
+    column(x: number): IArray<T>
+    {
+        return VirtualArray.create<T>(this.height, y => this.at(new Position(x, y)));
     }
 }
