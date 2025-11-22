@@ -1,29 +1,26 @@
+import { PersistentArray } from "./parray";
 import { Position } from "./position";
 
-export class Grid<T>
+
+export class PersistentGrid<T>
 {
-    private grid: T[][];
+    private grid: PersistentArray<PersistentArray<T>>;
 
-    constructor(width: number, height: number, initializer: (p: Position) => T)
+    static create<T>(width: number, height: number, initializer: (p: Position) => T): PersistentGrid<T>
     {
-        this.grid = new Array<T[]>(height);
+        const grid = PersistentArray.create<PersistentArray<T>>(height, y => PersistentArray.create<T>(width, x => initializer(new Position(x, y))));
 
-        for ( let y = 0; y !== height; ++y )
-        {
-            this.grid[y] = new Array<T>(width);
+        return new PersistentGrid<T>(grid);
+    }
 
-            for ( let x = 0; x !== width; ++x )
-            {
-                const position = new Position(x, y);
-
-                this.grid[y][x] = initializer(position);
-            }
-        }
+    private constructor(grid: PersistentArray<PersistentArray<T>>)
+    {
+        this.grid = grid;
     }
 
     get width(): number
     {
-        return this.grid[0].length;
+        return this.grid.at(0).length;
     }
 
     get height(): number
@@ -33,6 +30,6 @@ export class Grid<T>
 
     at(position: Position): T
     {
-        return this.grid[position.y][position.x];
+        return this.grid.at(position.y).at(position.x);
     }
 }
