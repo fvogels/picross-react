@@ -60,7 +60,7 @@ export class VirtualArray<T> implements IArray<T>
 
     private readonly valueFunction: (index: number) => T;
 
-    static create(length: number, valueFunction: (index: number) => T)
+    static create<T>(length: number, valueFunction: (index: number) => T)
     {
         return new VirtualArray<T>(length, valueFunction);
     }
