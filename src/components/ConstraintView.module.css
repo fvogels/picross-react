@@ -1,0 +1,18 @@
+.constraint {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1px;
+}
+
+.satisfied {
+    background: #AFA;
+}
+
+.unsatisfied {
+    background: #AAA;
+}
+
+.violated {
+    background: #FAA;
+}
