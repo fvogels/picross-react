@@ -1,4 +1,6 @@
-import { PersistentArray } from "@/util/array";
+import { PersistentArray, reverse, type IArray } from "@/util/array";
+import type { Square } from "./square";
+import { repeat } from "@/util";
 
 
 export interface Constraint
@@ -20,13 +22,121 @@ export class Constraints
         const contents: PersistentArray<Constraint> = PersistentArray.fromArray(values.map(value => ({ value, satisfaction: 'unsatisfied' })));
         const satisfaction: Satisfaction = 'unsatisfied';
 
-        return { constraints: contents, satisfaction };
+        return new Constraints(contents, satisfaction);
     }
 
     constructor(constraints: PersistentArray<Constraint>, satisfaction: Satisfaction)
     {
         this.constraints = constraints;
         this.satisfaction = satisfaction;
+    }
+
+    updateSatisfaction(squares: IArray<Square>): Constraints
+    {
+        const { left, right } = this.findIslands(squares);
+        const updatedSatisfactions = repeat<Satisfaction>(this.constraints.length, 'unsatisfied')
+        let updatedOverallSatisfaction: Satisfaction = 'unsatisfied';
+
+        let i = 0;
+        while ( i < left.length && i < this.constraints.length )
+        {
+            if ( left[i] === this.constraints.at(i).value )
+            {
+                updatedSatisfactions[i] = 'satisfied';
+            }
+            else
+            {
+                updatedSatisfactions[i] = 'violated';
+                updatedOverallSatisfaction = 'violated';
+            }
+
+            ++i;
+        }
+
+        if ( i === this.constraints.length && updatedOverallSatisfaction !== 'violated' )
+        {
+            updatedOverallSatisfaction = 'satisfied';
+        }
+
+        if ( left.length > 0 && right.length == 0 && left.length !== this.constraints.length )
+        {
+            updatedOverallSatisfaction = 'violated';
+        }
+
+        let j = 0;
+        while ( j < right.length && this.constraints.length - j > i )
+        {
+            if ( right[j] === this.constraints.at(this.constraints.length - j - 1).value )
+            {
+                updatedSatisfactions[this.constraints.length - j - 1] = 'satisfied';
+            }
+            else
+            {
+                updatedSatisfactions[this.constraints.length - j - 1] = 'violated';
+                updatedOverallSatisfaction = 'violated';
+            }
+
+            j++;
+        }
+
+        const updatedConstraints = PersistentArray.create<Constraint>(this.constraints.length, i => ({value: this.constraints.at(i).value, satisfaction: updatedSatisfactions[i]}));
+        return new Constraints(updatedConstraints, updatedOverallSatisfaction);
+    }
+
+    private findIslands(squares: IArray<Square>): {left: number[], right: number[]}
+    {
+        const { islands: left, endReached } = this.findIslandsLeftToRight(squares);
+
+        if ( endReached )
+        {
+            return { left, right: [] };
+        }
+
+        const { islands: right } = this.findIslandsLeftToRight(reverse(squares));
+
+        return { left, right };
+    }
+
+    private findIslandsLeftToRight(squares: IArray<Square>): { islands: number[], endReached: boolean }
+    {
+        const islands: number[] = [];
+        let i = 0;
+        let filledCount = 0;
+
+        while ( i < squares.length )
+        {
+            switch ( squares.at(i).status )
+            {
+                case 'filled':
+                {
+                    filledCount++;
+                    i++;
+                    break;
+                }
+
+                case 'empty':
+                    if ( filledCount > 0 )
+                    {
+                        islands.push(filledCount);
+                        filledCount = 0;
+                    }
+                    i++;
+                    break;
+
+                case 'unknown':
+                    return { islands, endReached: false };
+
+                default:
+                    throw "bug";
+            }
+        }
+
+        if ( filledCount > 0 )
+        {
+            islands.push(filledCount);
+        }
+
+        return { islands, endReached: true };
     }
 }
 
