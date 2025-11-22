@@ -15,6 +15,14 @@ export class Constraints
 
     public readonly satisfaction: Satisfaction;
 
+    static fromArray(values: number[]): Constraints
+    {
+        const contents: PersistentArray<Constraint> = PersistentArray.fromArray(values.map(value => ({ value, satisfaction: 'unsatisfied' })));
+        const satisfaction: Satisfaction = 'unsatisfied';
+
+        return { constraints: contents, satisfaction };
+    }
+
     constructor(constraints: PersistentArray<Constraint>, satisfaction: Satisfaction)
     {
         this.constraints = constraints;
@@ -22,16 +30,8 @@ export class Constraints
     }
 }
 
-export function createConstraints(values: number[]): Constraints
-{
-    const contents: PersistentArray<Constraint> = PersistentArray.fromArray(values.map(value => ({ value, satisfaction: 'unsatisfied' })));
-    const satisfaction: Satisfaction = 'unsatisfied';
-
-    return { constraints: contents, satisfaction };
-}
-
 export function createConstraintsList(...constraints: number[][]): PersistentArray<Constraints>
 {
-    return PersistentArray.fromArray(constraints.map(createConstraints));
+    return PersistentArray.fromArray(constraints.map(Constraints.fromArray));
 }
 
