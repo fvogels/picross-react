@@ -1,19 +1,19 @@
 import { useState } from 'react';
-import './App.css'
-import type { Square } from './components/PlayGridView';
+import './App.css';
 import PlayGridView from './components/PlayGridView';
-import { PersistentGrid } from './util/grid';
-import type { Position } from './util/position';
+import { createConstraintsList } from './domain/play/constraint';
+import { Puzzle } from './domain/play/puzzle';
 import { rangeSelection as positionsInRange } from './util';
+import type { Position } from './util/position';
 
 
-function App(): React.ReactNode
+export default function App(): React.ReactNode
 {
-    const [grid, setGrid] = useState<PersistentGrid<Square>>(PersistentGrid.create<Square>(5, 5, (p: Position) => ({ status: 'unknown' })));
+    const [puzzle, setPuzzle] = useState(createPuzzle());
 
     return (
         <>
-            <PlayGridView grid={grid} onRangeSelected={onRangeSelected} />
+            <PlayGridView grid={puzzle.grid} onRangeSelected={onRangeSelected} />
         </>
     );
 
@@ -21,15 +21,33 @@ function App(): React.ReactNode
     function onRangeSelected(startPosition: Position, endPosition: Position, mode: 'filled' | 'empty' | 'unknown'): void
     {
         const selectedPositions = positionsInRange(startPosition, endPosition);
-        let updatedGrid = grid;
+        let updatedPuzzle = puzzle;
 
         for ( const selectedPosition of selectedPositions )
         {
-            updatedGrid = updatedGrid.update(selectedPosition, { status: mode });
+            updatedPuzzle = updatedPuzzle.update(selectedPosition, mode);
         }
 
-        setGrid(updatedGrid);
+        setPuzzle(updatedPuzzle);
     }
 }
 
-export default App;
+function createPuzzle(): Puzzle
+{
+    const rowConstraints = createConstraintsList(
+        [1],
+        [2],
+        [3],
+        [2],
+        [1],
+    );
+    const columnConstraints = createConstraintsList(
+        [1],
+        [2],
+        [3],
+        [2],
+        [1],
+    );
+
+    return Puzzle.create(rowConstraints, columnConstraints);
+}
