@@ -5,11 +5,14 @@ import ConstraintsView from "./ConstraintsView";
 import type { Square } from "./PlayGridView";
 import PlayGridView from "./PlayGridView";
 import classes from './PuzzleView.module.css';
+import type { Position } from "@/util/position";
+import React from "react";
 
 
 interface Props
 {
     puzzle: Puzzle;
+    onRangeSelected?: (startPosition: Position, endPosition: Position, mode: 'filled' | 'empty' | 'unknown') => void;
 }
 
 export interface Puzzle
@@ -24,7 +27,7 @@ export default function PuzzleView(props: Props): React.ReactNode
     return (
         <div className={classes.puzzleView}>
             <div className={classes.grid}>
-                <PlayGridView grid={props.puzzle.grid} />
+                <PlayGridView grid={props.puzzle.grid} onRangeSelected={props.onRangeSelected} />
             </div>
             <div className={classes.rowConstraints}>
                 {props.puzzle.rowConstraints.data.map(renderRowConstraints)}
@@ -36,17 +39,21 @@ export default function PuzzleView(props: Props): React.ReactNode
     );
 
 
-    function renderRowConstraints(constraints: Constraints): React.ReactNode
+    function renderRowConstraints(constraints: Constraints, index: number): React.ReactNode
     {
         return (
-            <ConstraintsView constraints={constraints} orientation="horizontal" />
+            <React.Fragment key={index}>
+                <ConstraintsView constraints={constraints} orientation="horizontal" />
+            </React.Fragment>
         );
     }
 
-    function renderColumnConstraints(constraints: Constraints): React.ReactNode
+    function renderColumnConstraints(constraints: Constraints, index: number): React.ReactNode
     {
         return (
-            <ConstraintsView constraints={constraints} orientation="vertical" />
+            <React.Fragment key={index}>
+                <ConstraintsView constraints={constraints} orientation="vertical" />
+            </React.Fragment>
         );
     }
 }
