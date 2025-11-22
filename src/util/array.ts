@@ -81,3 +81,8 @@ export class VirtualArray<T> implements IArray<T>
         return range(0, this.length).map(this.valueFunction);
     }
 }
+
+export function reverse<T>(array: IArray<T>): IArray<T>
+{
+    return VirtualArray.create<T>(array.length, i => array.at(array.length - i - 1));
+}
