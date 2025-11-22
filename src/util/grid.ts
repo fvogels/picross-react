@@ -32,4 +32,13 @@ export class PersistentGrid<T>
     {
         return this.grid.at(position.y).at(position.x);
     }
+
+    update(position: Position, newValue: T): PersistentGrid<T>
+    {
+        const row = this.grid.at(position.y);
+        const updatedRow = row.update(position.x, newValue);
+        const updatedGrid = this.grid.update(position.y, updatedRow);
+
+        return new PersistentGrid<T>(updatedGrid);
+    }
 }
