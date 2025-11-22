@@ -1,5 +1,6 @@
 import { range } from ".";
 
+
 export class PersistentArray<T>
 {
     private readonly items: T[];
