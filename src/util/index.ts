@@ -121,3 +121,8 @@ export function createSelectionIndexer(start: Position, end: Position): (p: Posi
         }
     }
 }
+
+export function repeat<T>(n: number, value: T): T[]
+{
+    return range(0, n).map(_ => value);
+}
