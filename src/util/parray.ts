@@ -11,6 +11,11 @@ export class PersistentArray<T>
         return new PersistentArray<T>(items);
     }
 
+    static fromArray<T>(array: T[]): PersistentArray<T>
+    {
+        return new PersistentArray<T>([...array]);
+    }
+
     private constructor(items: T[])
     {
         this.items = items;
