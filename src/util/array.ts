@@ -53,3 +53,31 @@ export class PersistentArray<T> implements IArray<T>
         return this.items;
     }
 }
+
+export class VirtualArray<T> implements IArray<T>
+{
+    public readonly length: number;
+
+    private readonly valueFunction: (index: number) => T;
+
+    static create(length: number, valueFunction: (index: number) => T)
+    {
+        return new VirtualArray<T>(length, valueFunction);
+    }
+
+    private constructor(length: number, valueFunction: (index: number) => T)
+    {
+        this.length = length;
+        this.valueFunction = valueFunction;
+    }
+
+    at(index: number): T
+    {
+        return this.valueFunction(index);
+    }
+
+    get data(): T[]
+    {
+        return range(0, this.length).map(this.valueFunction);
+    }
+}
