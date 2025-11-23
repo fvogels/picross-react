@@ -1,15 +1,25 @@
-.square {
+.outer {
     display: flex;
     justify-content: center;
     align-items: center;
+
     user-select: none;
-    margin: 1px;
+    width: 64px;
+    height: 64px;
+}
+
+.inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 200%;
+    width: 60px;
+    height: 60px;
 }
 
 .empty {
     background: white;
-    color: black;
+    color: #111;
 }
 
 .filled {

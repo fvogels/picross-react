@@ -17,11 +17,11 @@ interface Props
 
 export default function SquareView(props: Props): React.ReactNode
 {
-    const className = classes[props.status];
-
     return (
-        <div style={{width: '64px', height: '64px'}} className={`${classes.square} ${className}`} onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseEnter={onMouseEnter} draggable={false} onContextMenu={e => e.preventDefault()}>
-            {props.caption}
+        <div className={`${classes.outer}`} onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseEnter={onMouseEnter} draggable={false} onContextMenu={e => e.preventDefault()}>
+            <div className={`${classes.inner} ${classes[props.status]}`}>
+                {props.caption}
+            </div>
         </div>
     );
 
