@@ -39,6 +39,12 @@ export default function PlayGridView(props: Props): React.ReactNode
             return () => null;
         }
 
+        // Only add caption if more than one square has been selected
+        if ( selectionStart.x === selectionEnd.x && selectionStart.y === selectionEnd.y )
+        {
+            return () => null;
+        }
+
         return createSelectionIndexer(selectionStart, selectionEnd);
     }
 
