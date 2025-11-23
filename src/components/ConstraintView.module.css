@@ -3,16 +3,17 @@
     justify-content: center;
     align-items: center;
     padding: 1px;
+    font-weight: bold;
 }
 
 .satisfied {
-    background: #AFA;
+    color: #0F0;
 }
 
 .unsatisfied {
-    background: #AAA;
+    color: black;
 }
 
 .violated {
-    background: #FAA;
+    color: red;
 }

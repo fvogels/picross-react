@@ -39,7 +39,7 @@ function parseSatisfaction(s: string): Satisfaction
 }
 
 test.each([
-    [ [1], '.', 'U', 'U' ],
+    [ [1], '.', 'U', 'V' ],
     [ [1], 'X', 'S', 'S' ],
     [ [1], 'X.', 'S', 'S' ],
     [ [1,1], 'X.X', 'SS', 'S' ],
@@ -53,13 +53,16 @@ test.each([
     [ [1], '?.X', 'S', 'U' ],
     [ [1], 'X.X.X', 'S', 'V' ],
     [ [], '....', '', 'S'],
-    [ [1,2,1], '.......', 'UUU', 'U'],
+    [ [1,2,1], '.......', 'UUU', 'V'],
     [ [1,2,1], 'X......', 'SUU', 'V'],
     [ [1,2,1], 'X.X....', 'SVU', 'V'],
     [ [1,2,1], 'X.XX...', 'SSU', 'V'],
     [ [1,2,1], 'X.XX..X', 'SSS', 'S'],
     [ [1,2,1], 'X.XX?.X', 'SUS', 'U'],
     [ [1,2,1], 'X?XX?.X', 'UUS', 'U'],
+    [ [2], 'XX.??', 'S', 'U'],
+    [ [1,1], 'X.???', 'SU', 'U'],
+    [ [1,1], 'X..??', 'SU', 'U'],
 ])('"%s".updateConstraints(%j)', (constraintsArray, rowString, satisfactions, overallSatisfaction) => {
     const constraint = Constraints.fromArray(constraintsArray);
     const squares = parseRow(rowString);

@@ -1,4 +1,4 @@
-import { type PersistentArray } from "@/util/array";
+import { type IArray, type PersistentArray } from "@/util/array";
 import { PersistentGrid } from "@/util/grid";
 import type { Position } from "@/util/position";
 import type { Constraints } from "./constraint";
@@ -32,9 +32,9 @@ export class Puzzle
 
     update(position: Position, squareStatus: SquareStatus): Puzzle
     {
-        const updatedGrid = this.grid.update(position, {status: squareStatus})
-        const updatedRowConstraints = this.rowConstraints;
-        const updatedColumnConstraints = this.columnConstraints;
+        const updatedGrid = this.grid.replace(position, {status: squareStatus})
+        const updatedRowConstraints = this.rowConstraints.update(position.y, c => c.updateSatisfaction(updatedGrid.row(position.y)));
+        const updatedColumnConstraints = this.columnConstraints.update(position.x, c => c.updateSatisfaction(updatedGrid.column(position.x)));
 
         return new Puzzle(updatedGrid, updatedRowConstraints, updatedColumnConstraints);
     }

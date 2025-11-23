@@ -33,7 +33,7 @@ export class Constraints
 
     updateSatisfaction(squares: IArray<Square>): Constraints
     {
-        const { left, right } = this.findIslands(squares);
+        const { left, right, complete } = this.findIslands(squares);
         const updatedSatisfactions = repeat<Satisfaction>(this.constraints.length, 'unsatisfied')
         let updatedOverallSatisfaction: Satisfaction = 'unsatisfied';
 
@@ -53,12 +53,12 @@ export class Constraints
             ++i;
         }
 
-        if ( i === this.constraints.length && updatedOverallSatisfaction !== 'violated' )
+        if ( updatedSatisfactions.every(s => s === 'satisfied' ) && squares.data.every(s => s.status !== 'unknown') )
         {
             updatedOverallSatisfaction = 'satisfied';
         }
 
-        if ( left.length > 0 && right.length == 0 && left.length !== this.constraints.length )
+        if ( complete && left.length !== this.constraints.length )
         {
             updatedOverallSatisfaction = 'violated';
         }
@@ -83,18 +83,18 @@ export class Constraints
         return new Constraints(updatedConstraints, updatedOverallSatisfaction);
     }
 
-    private findIslands(squares: IArray<Square>): {left: number[], right: number[]}
+    private findIslands(squares: IArray<Square>): {left: number[], right: number[], complete: boolean}
     {
         const { islands: left, endReached } = this.findIslandsLeftToRight(squares);
 
         if ( endReached )
         {
-            return { left, right: [] };
+            return { left, right: [], complete: true };
         }
 
         const { islands: right } = this.findIslandsLeftToRight(reverse(squares));
 
-        return { left, right };
+        return { left, right, complete: false };
     }
 
     private findIslandsLeftToRight(squares: IArray<Square>): { islands: number[], endReached: boolean }
