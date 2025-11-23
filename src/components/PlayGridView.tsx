@@ -56,7 +56,7 @@ export default function PlayGridView(props: Props): React.ReactNode
         const position = new Position(x, y);
         const square = grid.at(position);
         const selectionIndex = indexer(position);
-        const caption: string | undefined = selectionIndex === null ? undefined : `${selectionIndex}`;
+        const caption: string | undefined = selectionIndex === null ? undefined : `${selectionIndex + 1}`;
 
         return (
             <React.Fragment key={position.x}>
