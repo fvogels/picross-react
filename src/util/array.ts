@@ -46,11 +46,16 @@ export class PersistentArray<T> implements IArray<T>
         return this.items[index];
     }
 
-    update(index: number, newValue: T): PersistentArray<T>
+    replace(index: number, newValue: T): PersistentArray<T>
     {
         const copy = [...this.items];
         copy[index] = newValue;
         return new PersistentArray<T>(copy);
+    }
+
+    update(index: number, transformer: (oldValue: T) => T): PersistentArray<T>
+    {
+        return this.replace(index, transformer(this.at(index)));
     }
 
     get data() : T[]
