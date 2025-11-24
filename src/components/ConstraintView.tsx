@@ -17,8 +17,10 @@ export default function ConstraintView(props: Props): React.ReactNode
     const { value, satisfaction } = props.constraint;
 
     return (
-        <div style={{width: '64px', height: '64px'}} className={`${classes.constraint} ${classes[satisfaction]}`}>
-            {value}
+        <div className={classes.outer}>
+            <div className={`${classes.inner} ${classes[satisfaction]}`}>
+                {value}
+            </div>
         </div>
     );
 }

@@ -12,7 +12,7 @@
 }
 
 .satisfied {
-    background: #AFA;
+    background: #151;
 }
 
 .unsatisfied {
@@ -20,5 +20,5 @@
 }
 
 .violated {
-    background: #FAA;
+    background: #511;
 }
