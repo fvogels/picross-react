@@ -1,4 +1,4 @@
-import { PersistentArray, VirtualArray, type IArray } from "./array";
+import { PersistentArray, VirtualArray, type Array } from "./array";
 import { Position } from "./position";
 
 
@@ -10,12 +10,12 @@ export abstract class Grid<T>
 
     abstract at(position: Position): T;
 
-    row(y: number): IArray<T>
+    row(y: number): Array<T>
     {
         return VirtualArray.create<T>(this.width, x => this.at(new Position(x, y)));
     }
 
-    column(x: number): IArray<T>
+    column(x: number): Array<T>
     {
         return VirtualArray.create<T>(this.height, y => this.at(new Position(x, y)));
     }

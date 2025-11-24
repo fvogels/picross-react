@@ -1,5 +1,5 @@
 import { repeat } from "@/util";
-import { PersistentArray, type IArray } from "@/util/array";
+import { PersistentArray, type Array } from "@/util/array";
 import type { SquareStatus } from "./square";
 
 
@@ -17,7 +17,7 @@ export class Constraints
         this.values = values;
     }
 
-    refine(squares: IArray<SquareStatus>): IArray<SquareStatus>
+    refine(squares: Array<SquareStatus>): Array<SquareStatus>
     {
         let result: SquareStatus[] = [];
         let isFirst = true;
@@ -44,7 +44,7 @@ export class Constraints
         return PersistentArray.fromArray(result);
     }
 
-    private generateCompatible(compatibleWith: IArray<SquareStatus>): Iterable<('filled' | 'empty')[]>
+    private generateCompatible(compatibleWith: Array<SquareStatus>): Iterable<('filled' | 'empty')[]>
     {
         const squares = compatibleWith.data;
         const constraints = this.values;

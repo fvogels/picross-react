@@ -1,4 +1,4 @@
-import type { IArray } from "@/util/array";
+import type { Array } from "@/util/array";
 import type { PersistentGrid } from "@/util/grid";
 import type { Constraints } from "./ConstraintsView";
 import ConstraintsView from "./ConstraintsView";
@@ -17,8 +17,8 @@ interface Props
 
 export interface Puzzle
 {
-    rowConstraints: IArray<Constraints>;
-    columnConstraints: IArray<Constraints>;
+    rowConstraints: Array<Constraints>;
+    columnConstraints: Array<Constraints>;
     grid: PersistentGrid<SquareStatus>;
 }
 

@@ -1,10 +1,10 @@
 import { Constraints, type Satisfaction } from '@/domain/play/constraint';
 import type { Square } from '@/domain/play/square'
-import { PersistentArray, type IArray } from '@/util/array'
+import { PersistentArray, type Array } from '@/util/array'
 import { expect, test } from 'vitest'
 
 
-function parseRow(str: string): IArray<Square>
+function parseRow(str: string): Array<Square>
 {
     const squares: Square[] = [...str].map(c => {
         switch ( c )

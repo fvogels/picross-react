@@ -1,4 +1,4 @@
-import { type IArray, type PersistentArray } from "@/util/array";
+import { type Array, type PersistentArray } from "@/util/array";
 import { PersistentGrid } from "@/util/grid";
 import type { Position } from "@/util/position";
 import type { Constraints } from "./constraint";

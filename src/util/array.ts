@@ -1,7 +1,7 @@
 import { range } from ".";
 
 
-export abstract class IArray<T>
+export abstract class Array<T>
 {
     abstract get length(): number;
 
@@ -10,7 +10,7 @@ export abstract class IArray<T>
     abstract get data(): T[];
 }
 
-export class PersistentArray<T> extends IArray<T>
+export class PersistentArray<T> extends Array<T>
 {
     private readonly items: T[];
 
@@ -65,7 +65,7 @@ export class PersistentArray<T> extends IArray<T>
     }
 }
 
-export class VirtualArray<T> extends IArray<T>
+export class VirtualArray<T> extends Array<T>
 {
     public readonly length: number;
 
@@ -99,7 +99,7 @@ export class VirtualArray<T> extends IArray<T>
     }
 }
 
-export function reverse<T>(array: IArray<T>): IArray<T>
+export function reverse<T>(array: Array<T>): Array<T>
 {
     return VirtualArray.create<T>(array.length, i => array.at(array.length - i - 1));
 }

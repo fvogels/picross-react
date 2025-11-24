@@ -1,4 +1,4 @@
-import type { IArray } from '@/util/array';
+import type { Array } from '@/util/array';
 import React from 'react';
 import classes from './ConstraintsView.module.css';
 import ConstraintView, { type Constraint } from './ConstraintView';
@@ -12,7 +12,7 @@ interface Props
 
 export interface Constraints
 {
-    constraints: IArray<Constraint>;
+    constraints: Array<Constraint>;
     satisfaction: 'satisfied' | 'unsatisfied' | 'violated';
 }
 
@@ -29,7 +29,7 @@ export default function ConstraintsView(props: Props): React.ReactNode
     );
 
 
-    function renderConstraints(constraints: IArray<Constraint>): React.ReactNode
+    function renderConstraints(constraints: Array<Constraint>): React.ReactNode
     {
         return constraints.data.map(renderConstraint);
     }

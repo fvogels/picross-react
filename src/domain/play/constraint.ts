@@ -1,4 +1,4 @@
-import { PersistentArray, reverse, type IArray } from "@/util/array";
+import { PersistentArray, reverse, type Array } from "@/util/array";
 import type { Square } from "./square";
 import { repeat } from "@/util";
 
@@ -31,7 +31,7 @@ export class Constraints
         this.satisfaction = satisfaction;
     }
 
-    updateSatisfaction(squares: IArray<Square>): Constraints
+    updateSatisfaction(squares: Array<Square>): Constraints
     {
         const { left, right, complete } = this.findIslands(squares);
         const updatedSatisfactions = repeat<Satisfaction>(this.constraints.length, 'unsatisfied')
@@ -83,7 +83,7 @@ export class Constraints
         return new Constraints(updatedConstraints, updatedOverallSatisfaction);
     }
 
-    private findIslands(squares: IArray<Square>): {left: number[], right: number[], complete: boolean}
+    private findIslands(squares: Array<Square>): {left: number[], right: number[], complete: boolean}
     {
         const { islands: left, endReached } = this.findIslandsLeftToRight(squares);
 
@@ -97,7 +97,7 @@ export class Constraints
         return { left, right, complete: false };
     }
 
-    private findIslandsLeftToRight(squares: IArray<Square>): { islands: number[], endReached: boolean }
+    private findIslandsLeftToRight(squares: Array<Square>): { islands: number[], endReached: boolean }
     {
         const islands: number[] = [];
         let i = 0;
