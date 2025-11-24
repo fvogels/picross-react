@@ -1,17 +1,15 @@
-import { createSelectionIndexer, range } from "@/util";
+import { createSelectionIndexer } from "@/util";
 import type { PersistentGrid } from "@/util/grid";
 import { Position } from "@/util/position";
-import { useMemo, useState } from "react";
-import classes from './PlayGridView.module.css';
-import SquareView from "./SquareView";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import GridView from "./GridView";
+import SquareView from "./SquareView";
 
 
 interface Props
 {
     grid: PersistentGrid<SquareStatus>;
-    onRangeSelected?: (startPosition: Position, endPosition: Position, mode: SquareStatus) => void;
+    onRangeSelected?: (startPosition: Position, endPosition: Position, mode: 'empty' | 'filled' | 'unknown') => void;
 }
 
 export interface SquareStatus
