@@ -2,8 +2,8 @@ import type { IArray } from "@/util/array";
 import type { PersistentGrid } from "@/util/grid";
 import type { Constraints } from "./ConstraintsView";
 import ConstraintsView from "./ConstraintsView";
-import type { Square } from "./PlayGridView";
-import PlayGridView from "./PlayGridView";
+import type { SquareStatus } from "./SquareGridView";
+import SquareGridView from "./SquareGridView";
 import classes from './PuzzleView.module.css';
 import type { Position } from "@/util/position";
 import React from "react";
@@ -19,7 +19,7 @@ export interface Puzzle
 {
     rowConstraints: IArray<Constraints>;
     columnConstraints: IArray<Constraints>;
-    grid: PersistentGrid<Square>;
+    grid: PersistentGrid<SquareStatus>;
 }
 
 export default function PuzzleView(props: Props): React.ReactNode
@@ -27,7 +27,7 @@ export default function PuzzleView(props: Props): React.ReactNode
     return (
         <div className={classes.puzzleView}>
             <div className={classes.grid}>
-                <PlayGridView grid={props.puzzle.grid} onRangeSelected={props.onRangeSelected} />
+                <SquareGridView grid={props.puzzle.grid} onRangeSelected={props.onRangeSelected} />
             </div>
             <div className={classes.rowConstraints}>
                 {props.puzzle.rowConstraints.data.map(renderRowConstraints)}

@@ -9,16 +9,16 @@ import React from "react";
 
 interface Props
 {
-    grid: PersistentGrid<Square>;
-    onRangeSelected?: (startPosition: Position, endPosition: Position, mode: 'filled' | 'empty' | 'unknown') => void;
+    grid: PersistentGrid<SquareStatus>;
+    onRangeSelected?: (startPosition: Position, endPosition: Position, mode: SquareStatus) => void;
 }
 
-export interface Square
+export interface SquareStatus
 {
     status: 'empty' | 'filled' | 'unknown';
 }
 
-export default function PlayGridView(props: Props): React.ReactNode
+export default function SquareGridView(props: Props): React.ReactNode
 {
     const { grid } = props;
     const [ selectionStart, setSelectionStart ] = useState<Position | null>(null);
