@@ -8,6 +8,11 @@ export abstract class Array<T>
     abstract at(index: number): T;
 
     abstract get data(): T[];
+
+    virtualMap<R>(transformer: (value: T, index: number) => R): Array<R>
+    {
+        return VirtualArray.create<R>(this.length, i => transformer(this.at(i), i));
+    }
 }
 
 export class PersistentArray<T> extends Array<T>
