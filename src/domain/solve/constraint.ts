@@ -44,7 +44,7 @@ export class Constraints
         return PersistentArray.fromArray(result);
     }
 
-    generateCompatible(compatibleWith: IArray<Square>): Iterable<('filled' | 'empty')[]>
+    private generateCompatible(compatibleWith: IArray<Square>): Iterable<('filled' | 'empty')[]>
     {
         const squares = compatibleWith.data;
         const constraints = this.values;
