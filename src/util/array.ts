@@ -1,16 +1,16 @@
 import { range } from ".";
 
 
-export interface IArray<T>
+export abstract class IArray<T>
 {
-    get length(): number;
+    abstract get length(): number;
 
-    at(index: number): T;
+    abstract at(index: number): T;
 
-    get data(): T[];
+    abstract get data(): T[];
 }
 
-export class PersistentArray<T> implements IArray<T>
+export class PersistentArray<T> extends IArray<T>
 {
     private readonly items: T[];
 
@@ -28,6 +28,7 @@ export class PersistentArray<T> implements IArray<T>
 
     private constructor(items: T[])
     {
+        super();
         this.items = items;
     }
 
@@ -64,7 +65,7 @@ export class PersistentArray<T> implements IArray<T>
     }
 }
 
-export class VirtualArray<T> implements IArray<T>
+export class VirtualArray<T> extends IArray<T>
 {
     public readonly length: number;
 
@@ -77,6 +78,7 @@ export class VirtualArray<T> implements IArray<T>
 
     private constructor(length: number, valueFunction: (index: number) => T)
     {
+        super();
         this.length = length;
         this.valueFunction = valueFunction;
     }
