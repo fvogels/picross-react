@@ -1,5 +1,5 @@
 import { range } from "@/util";
-import type { GridBase as Grid } from "@/util/grid";
+import type { Grid } from "@/util/grid";
 import { Position } from "@/util/position";
 import React from "react";
 import classes from './GridView.module.css';

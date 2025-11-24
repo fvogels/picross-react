@@ -2,7 +2,7 @@ import { PersistentArray, VirtualArray, type IArray } from "./array";
 import { Position } from "./position";
 
 
-export abstract class GridBase<T>
+export abstract class Grid<T>
 {
     abstract get width(): number;
 
@@ -26,7 +26,7 @@ export abstract class GridBase<T>
     }
 }
 
-export class PersistentGrid<T> extends GridBase<T>
+export class PersistentGrid<T> extends Grid<T>
 {
     private grid: PersistentArray<PersistentArray<T>>;
 
@@ -69,7 +69,7 @@ export class PersistentGrid<T> extends GridBase<T>
 }
 
 
-export class VirtualGrid<T> extends GridBase<T>
+export class VirtualGrid<T> extends Grid<T>
 {
     readonly width: number;
 
