@@ -2,7 +2,26 @@ import { PersistentArray, VirtualArray, type IArray } from "./array";
 import { Position } from "./position";
 
 
-export class PersistentGrid<T>
+export abstract class GridBase<T>
+{
+    abstract get width(): number;
+
+    abstract get height(): number;
+
+    abstract at(position: Position): T;
+
+    row(y: number): IArray<T>
+    {
+        return VirtualArray.create<T>(this.width, x => this.at(new Position(x, y)));
+    }
+
+    column(x: number): IArray<T>
+    {
+        return VirtualArray.create<T>(this.height, y => this.at(new Position(x, y)));
+    }
+}
+
+export class PersistentGrid<T> extends GridBase<T>
 {
     private grid: PersistentArray<PersistentArray<T>>;
 
@@ -15,6 +34,7 @@ export class PersistentGrid<T>
 
     private constructor(grid: PersistentArray<PersistentArray<T>>)
     {
+        super();
         this.grid = grid;
     }
 
@@ -40,15 +60,5 @@ export class PersistentGrid<T>
         const updatedGrid = this.grid.replace(position.y, updatedRow);
 
         return new PersistentGrid<T>(updatedGrid);
-    }
-
-    row(y: number): IArray<T>
-    {
-        return VirtualArray.create<T>(this.width, x => this.at(new Position(x, y)));
-    }
-
-    column(x: number): IArray<T>
-    {
-        return VirtualArray.create<T>(this.height, y => this.at(new Position(x, y)));
     }
 }
