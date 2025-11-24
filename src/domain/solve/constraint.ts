@@ -17,7 +17,7 @@ export class Constraints
         this.values = values;
     }
 
-    refine(squares: Array<SquareStatus>): Array<SquareStatus>
+    refine(squares: Array<SquareStatus>): SquareStatus[]
     {
         let result: SquareStatus[] = [];
         let isFirst = true;
@@ -41,7 +41,7 @@ export class Constraints
             }
         }
 
-        return PersistentArray.fromArray(result);
+        return result;
     }
 
     private generateCompatible(compatibleWith: Array<SquareStatus>): Iterable<('filled' | 'empty')[]>
