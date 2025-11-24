@@ -19,6 +19,11 @@ export abstract class GridBase<T>
     {
         return VirtualArray.create<T>(this.height, y => this.at(new Position(x, y)));
     }
+
+    virtualMap<R>(transformer: (item: T, position: Position) => R): VirtualGrid<R>
+    {
+        return VirtualGrid.create(this.width, this.height, p => transformer(this.at(p), p));
+    }
 }
 
 export class PersistentGrid<T> extends GridBase<T>
@@ -60,5 +65,28 @@ export class PersistentGrid<T> extends GridBase<T>
         const updatedGrid = this.grid.replace(position.y, updatedRow);
 
         return new PersistentGrid<T>(updatedGrid);
+    }
+}
+
+
+export class VirtualGrid<T> extends GridBase<T>
+{
+    readonly width: number;
+
+    readonly height: number;
+
+    readonly at: (position: Position) => T;
+
+    static create<T>(width: number, height: number, elementFetcher: (position: Position) => T): VirtualGrid<T>
+    {
+        return new VirtualGrid<T>(width, height, elementFetcher);
+    }
+
+    private constructor(width: number, height: number, elementFetcher: (position: Position) => T)
+    {
+        super();
+        this.width = width;
+        this.height = height;
+        this.at = elementFetcher;
     }
 }
