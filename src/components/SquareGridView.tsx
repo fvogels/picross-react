@@ -1,10 +1,11 @@
 import { createSelectionIndexer, range } from "@/util";
 import type { PersistentGrid } from "@/util/grid";
 import { Position } from "@/util/position";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import classes from './PlayGridView.module.css';
 import SquareView from "./SquareView";
 import React from "react";
+import GridView from "./GridView";
 
 
 interface Props
@@ -23,12 +24,11 @@ export default function SquareGridView(props: Props): React.ReactNode
     const { grid } = props;
     const [ selectionStart, setSelectionStart ] = useState<Position | null>(null);
     const [ selectionEnd, setSelectionEnd ] = useState<Position | null>(null);
+    const rendererGrid = useMemo(() => grid.virtualMap(renderSquare), [grid, selectionStart, selectionEnd]);
     const indexer = createIndexer();
 
     return (
-        <div className={classes.rows}>
-            {range(0, grid.height).map(renderRow)}
-        </div>
+        <GridView grid={rendererGrid} />
     );
 
 
@@ -48,19 +48,8 @@ export default function SquareGridView(props: Props): React.ReactNode
         return createSelectionIndexer(selectionStart, selectionEnd);
     }
 
-    function renderRow(row: number): React.ReactNode
+    function renderSquare(square: SquareStatus, position: Position): React.ReactNode
     {
-        return (
-            <div className={classes.row} key={row}>
-                {range(0, grid.width).map(x => renderSquare(x, row))}
-            </div>
-        );
-    }
-
-    function renderSquare(x: number, y: number): React.ReactNode
-    {
-        const position = new Position(x, y);
-        const square = grid.at(position);
         const selectionIndex = indexer(position);
         const caption: string | undefined = selectionIndex === null ? undefined : `${selectionIndex + 1}`;
 
