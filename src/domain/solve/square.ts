@@ -1,1 +1,3 @@
-export type Square = 'filled' | 'empty' | 'unknown';
+export type SquareStatus = 'filled' | 'empty' | 'unknown';
+
+export type Square = { status: SquareStatus };
