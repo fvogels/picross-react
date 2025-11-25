@@ -1,11 +1,14 @@
 .filled {
     background: black;
+    color: white;
 }
 
 .empty {
     background: white;
+    color: black;
 }
 
 .unknown {
     background: #888;
+    color: black;
 }
