@@ -1,4 +1,4 @@
-import type { Array } from '@/util/array';
+import type { List } from '@/util/list';
 import React from 'react';
 import classes from './ConstraintsView.module.css';
 import ConstraintView, { type Constraint } from './ConstraintView';
@@ -12,7 +12,7 @@ interface Props
 
 export interface Constraints
 {
-    constraints: Array<Constraint>;
+    constraints: List<Constraint>;
     satisfaction: 'satisfied' | 'unsatisfied' | 'violated';
 }
 
@@ -29,7 +29,7 @@ export default function ConstraintsView(props: Props): React.ReactNode
     );
 
 
-    function renderConstraints(constraints: Array<Constraint>): React.ReactNode
+    function renderConstraints(constraints: List<Constraint>): React.ReactNode
     {
         return constraints.data.map(renderConstraint);
     }

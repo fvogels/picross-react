@@ -1,12 +1,12 @@
-import type { Array } from "@/util/array";
-import type { PersistentGrid } from "@/util/grid";
-import type { Constraints } from "./ConstraintsView";
-import ConstraintsView from "./ConstraintsView";
-import type { SquareStatus } from "./SquareGridView";
-import SquareGridView from "./SquareGridView";
-import classes from './PuzzleView.module.css';
+import type { List } from "@/util/list";
+import type { Grid } from "@/util/grid";
 import type { Position } from "@/util/position";
 import React from "react";
+import type { Constraints } from "./ConstraintsView";
+import ConstraintsView from "./ConstraintsView";
+import classes from './PuzzleView.module.css';
+import type { SquareStatus } from "./SquareGridView";
+import SquareGridView from "./SquareGridView";
 
 
 interface Props
@@ -17,9 +17,9 @@ interface Props
 
 export interface Puzzle
 {
-    rowConstraints: Array<Constraints>;
-    columnConstraints: Array<Constraints>;
-    grid: PersistentGrid<SquareStatus>;
+    rowConstraints: List<Constraints>;
+    columnConstraints: List<Constraints>;
+    grid: Grid<SquareStatus>;
 }
 
 export default function PuzzleView(props: Props): React.ReactNode

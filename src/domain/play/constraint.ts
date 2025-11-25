@@ -1,5 +1,5 @@
-import { PersistentArray, reverse, type Array } from "@/util/array";
-import type { Square } from "./square";
+import { PersistentList, reverse, type List } from "@/util/list";
+import type { SquareStatus } from "./square";
 import { repeat } from "@/util";
 
 
@@ -13,25 +13,25 @@ export type Satisfaction = 'satisfied' | 'unsatisfied' | 'violated';
 
 export class Constraints
 {
-    public readonly constraints: PersistentArray<Constraint>;
+    public readonly constraints: PersistentList<Constraint>;
 
     public readonly satisfaction: Satisfaction;
 
     static fromArray(values: number[]): Constraints
     {
-        const contents: PersistentArray<Constraint> = PersistentArray.fromArray(values.map(value => ({ value, satisfaction: 'unsatisfied' })));
+        const contents: PersistentList<Constraint> = PersistentList.fromArray(values.map(value => ({ value, satisfaction: 'unsatisfied' })));
         const satisfaction: Satisfaction = 'unsatisfied';
 
         return new Constraints(contents, satisfaction);
     }
 
-    constructor(constraints: PersistentArray<Constraint>, satisfaction: Satisfaction)
+    constructor(constraints: PersistentList<Constraint>, satisfaction: Satisfaction)
     {
         this.constraints = constraints;
         this.satisfaction = satisfaction;
     }
 
-    updateSatisfaction(squares: Array<Square>): Constraints
+    updateSatisfaction(squares: List<SquareStatus>): Constraints
     {
         const { left, right, complete } = this.findIslands(squares);
         const updatedSatisfactions = repeat<Satisfaction>(this.constraints.length, 'unsatisfied')
@@ -53,7 +53,7 @@ export class Constraints
             ++i;
         }
 
-        if ( updatedSatisfactions.every(s => s === 'satisfied' ) && squares.data.every(s => s.status !== 'unknown') )
+        if ( updatedSatisfactions.every(s => s === 'satisfied' ) && squares.data.every(s => s !== 'unknown') )
         {
             updatedOverallSatisfaction = 'satisfied';
         }
@@ -79,11 +79,11 @@ export class Constraints
             j++;
         }
 
-        const updatedConstraints = PersistentArray.create<Constraint>(this.constraints.length, i => ({value: this.constraints.at(i).value, satisfaction: updatedSatisfactions[i]}));
+        const updatedConstraints = PersistentList.create<Constraint>(this.constraints.length, i => ({value: this.constraints.at(i).value, satisfaction: updatedSatisfactions[i]}));
         return new Constraints(updatedConstraints, updatedOverallSatisfaction);
     }
 
-    private findIslands(squares: Array<Square>): {left: number[], right: number[], complete: boolean}
+    private findIslands(squares: List<SquareStatus>): {left: number[], right: number[], complete: boolean}
     {
         const { islands: left, endReached } = this.findIslandsLeftToRight(squares);
 
@@ -97,7 +97,7 @@ export class Constraints
         return { left, right, complete: false };
     }
 
-    private findIslandsLeftToRight(squares: Array<Square>): { islands: number[], endReached: boolean }
+    private findIslandsLeftToRight(squares: List<SquareStatus>): { islands: number[], endReached: boolean }
     {
         const islands: number[] = [];
         let i = 0;
@@ -105,7 +105,7 @@ export class Constraints
 
         while ( i < squares.length )
         {
-            switch ( squares.at(i).status )
+            switch ( squares.at(i) )
             {
                 case 'filled':
                 {
@@ -140,8 +140,8 @@ export class Constraints
     }
 }
 
-export function createConstraintsList(...constraints: number[][]): PersistentArray<Constraints>
+export function createConstraintsList(...constraints: number[][]): PersistentList<Constraints>
 {
-    return PersistentArray.fromArray(constraints.map(Constraints.fromArray));
+    return PersistentList.fromArray(constraints.map(Constraints.fromArray));
 }
 

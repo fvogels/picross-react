@@ -1,5 +1,5 @@
 import { createSelectionIndexer } from "@/util";
-import type { PersistentGrid } from "@/util/grid";
+import type { Grid } from "@/util/grid";
 import { Position } from "@/util/position";
 import React, { useMemo, useState } from "react";
 import GridView from "./GridView";
@@ -8,14 +8,11 @@ import SquareView from "./SquareView";
 
 interface Props
 {
-    grid: PersistentGrid<SquareStatus>;
+    grid: Grid<SquareStatus>;
     onRangeSelected?: (startPosition: Position, endPosition: Position, mode: 'empty' | 'filled' | 'unknown') => void;
 }
 
-export interface SquareStatus
-{
-    status: 'empty' | 'filled' | 'unknown';
-}
+export type SquareStatus = 'empty' | 'filled' | 'unknown';
 
 export default function SquareGridView(props: Props): React.ReactNode
 {
@@ -54,7 +51,7 @@ export default function SquareGridView(props: Props): React.ReactNode
         return (
             <React.Fragment key={position.x}>
                 <SquareView
-                    status={square.status}
+                    status={square}
                     caption={caption}
                     onLeftPressed={() => onStartSelection(position) }
                     onLeftDragged={() => onUpdateSelection(position) }

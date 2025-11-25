@@ -1,5 +1,5 @@
 import { repeat } from "@/util";
-import { PersistentArray, type Array } from "@/util/array";
+import { type List } from "@/util/list";
 import type { SquareStatus } from "./square";
 
 
@@ -17,7 +17,7 @@ export class Constraints
         this.values = values;
     }
 
-    refine(squares: Array<SquareStatus>): SquareStatus[]
+    refine(squares: List<SquareStatus>): SquareStatus[]
     {
         let result: SquareStatus[] = [];
         let isFirst = true;
@@ -44,7 +44,7 @@ export class Constraints
         return result;
     }
 
-    private generateCompatible(compatibleWith: Array<SquareStatus>): Iterable<('filled' | 'empty')[]>
+    private generateCompatible(compatibleWith: List<SquareStatus>): Iterable<('filled' | 'empty')[]>
     {
         const squares = compatibleWith.data;
         const constraints = this.values;

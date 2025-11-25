@@ -24,6 +24,9 @@ export class Solver
         this.index = 0;
     }
 
+    /**
+     * @returns True if a pass was finished, false otherwise.
+     */
     step(): boolean
     {
         if ( this.orientation === 'horizontal' )
@@ -69,5 +72,41 @@ export class Solver
                 return false;
             }
         }
+    }
+
+    finishPass()
+    {
+        while ( !this.step() );
+    }
+
+    get isSolved(): boolean
+    {
+        return this.grid.every(({status}) => status !== 'unknown');
+    }
+
+    get unknownCount(): number
+    {
+        return this.grid.count(({status}) => status === 'unknown');
+    }
+
+    solve(): boolean
+    {
+        let unknownCount = this.unknownCount;
+
+        while ( unknownCount > 0 )
+        {
+            this.finishPass();
+
+            let newUnknownCount = this.unknownCount;
+
+            if ( unknownCount === newUnknownCount )
+            {
+                return false;
+            }
+
+            unknownCount = newUnknownCount;
+        }
+
+        return true;
     }
 }

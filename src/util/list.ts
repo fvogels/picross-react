@@ -1,7 +1,7 @@
 import { range } from ".";
 
 
-export abstract class Array<T>
+export abstract class List<T>
 {
     abstract get length(): number;
 
@@ -9,26 +9,26 @@ export abstract class Array<T>
 
     abstract get data(): T[];
 
-    virtualMap<R>(transformer: (value: T, index: number) => R): Array<R>
+    virtualMap<R>(transformer: (value: T, index: number) => R): List<R>
     {
-        return VirtualArray.create<R>(this.length, i => transformer(this.at(i), i));
+        return VirtualList.create<R>(this.length, i => transformer(this.at(i), i));
     }
 }
 
-export class PersistentArray<T> extends Array<T>
+export class PersistentList<T> extends List<T>
 {
     private readonly items: T[];
 
-    static create<T>(size: number, initializer: (index: number) => T): PersistentArray<T>
+    static create<T>(size: number, initializer: (index: number) => T): PersistentList<T>
     {
         const items = range(0, size).map(initializer);
 
-        return new PersistentArray<T>(items);
+        return new PersistentList<T>(items);
     }
 
-    static fromArray<T>(array: T[]): PersistentArray<T>
+    static fromArray<T>(array: T[]): PersistentList<T>
     {
-        return new PersistentArray<T>([...array]);
+        return new PersistentList<T>([...array]);
     }
 
     private constructor(items: T[])
@@ -52,14 +52,14 @@ export class PersistentArray<T> extends Array<T>
         return this.items[index];
     }
 
-    replace(index: number, newValue: T): PersistentArray<T>
+    replace(index: number, newValue: T): PersistentList<T>
     {
         const copy = [...this.items];
         copy[index] = newValue;
-        return new PersistentArray<T>(copy);
+        return new PersistentList<T>(copy);
     }
 
-    update(index: number, transformer: (oldValue: T) => T): PersistentArray<T>
+    update(index: number, transformer: (oldValue: T) => T): PersistentList<T>
     {
         return this.replace(index, transformer(this.at(index)));
     }
@@ -70,7 +70,7 @@ export class PersistentArray<T> extends Array<T>
     }
 }
 
-export class VirtualArray<T> extends Array<T>
+export class VirtualList<T> extends List<T>
 {
     public readonly length: number;
 
@@ -78,7 +78,7 @@ export class VirtualArray<T> extends Array<T>
 
     static create<T>(length: number, valueFunction: (index: number) => T)
     {
-        return new VirtualArray<T>(length, valueFunction);
+        return new VirtualList<T>(length, valueFunction);
     }
 
     private constructor(length: number, valueFunction: (index: number) => T)
@@ -104,7 +104,37 @@ export class VirtualArray<T> extends Array<T>
     }
 }
 
-export function reverse<T>(array: Array<T>): Array<T>
+export function reverse<T>(array: List<T>): List<T>
 {
-    return VirtualArray.create<T>(array.length, i => array.at(array.length - i - 1));
+    return VirtualList.create<T>(array.length, i => array.at(array.length - i - 1));
+}
+
+export class RangeList extends List<number>
+{
+    private readonly start;
+
+    readonly length;
+
+    static create(start: number, length: number)
+    {
+        return new RangeList(start, length);
+    }
+
+    private constructor(start: number, length: number)
+    {
+        super();
+
+        this.start = start;
+        this.length = length;
+    }
+
+    at(index: number): number
+    {
+        return this.start + index;
+    }
+
+    get data(): number[]
+    {
+        return range(this.start, this.start + this.length);
+    }
 }

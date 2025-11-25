@@ -1,26 +1,26 @@
+import type { SquareStatus } from '@/components/SquareGridView';
 import { Constraints, type Satisfaction } from '@/domain/play/constraint';
-import type { Square } from '@/domain/play/square'
-import { PersistentArray, type Array } from '@/util/array'
-import { expect, test } from 'vitest'
+import { PersistentList, type List } from '@/util/list';
+import { expect, test } from 'vitest';
 
 
-function parseRow(str: string): Array<Square>
+function parseRow(str: string): List<SquareStatus>
 {
-    const squares: Square[] = [...str].map(c => {
+    const squares: SquareStatus[] = [...str].map(c => {
         switch ( c )
         {
             case 'X':
-                return { status: 'filled' };
+                return 'filled';
             case '.':
-                return { status: 'empty' };
+                return 'empty';
             case '?':
-                return { status: 'unknown' };
+                return 'unknown';
             default:
                 throw "bug";
         }
     });
 
-    return PersistentArray.fromArray(squares);
+    return PersistentList.fromArray(squares);
 }
 
 function parseSatisfaction(s: string): Satisfaction

@@ -1,10 +1,10 @@
 import { Constraints } from '@/domain/solve/constraint';
 import type { SquareStatus } from '@/domain/solve/square';
-import { PersistentArray, type Array } from '@/util/array';
+import { PersistentList, type List } from '@/util/list';
 import { expect, test } from 'vitest';
 
 
-function parseSquares(str: string): Array<SquareStatus>
+function parseSquares(str: string): List<SquareStatus>
 {
     const squares: SquareStatus[] = [...str].map(c => {
         switch ( c )
@@ -20,7 +20,7 @@ function parseSquares(str: string): Array<SquareStatus>
         }
     });
 
-    return PersistentArray.fromArray(squares);
+    return PersistentList.fromArray(squares);
 }
 
 function unparseSquares(squares: SquareStatus[]): string
@@ -65,7 +65,7 @@ test.each([
     const constraints = Constraints.fromArray(constraintsArray);
     const squares = parseSquares(rowString);
     const expected = parseSquares(expectedString).data;
-    const actual = constraints.refine(squares).data;
+    const actual = constraints.refine(squares);
 
     expect(unparseSquares(actual)).to.be.equal(unparseSquares(expected));
 })
