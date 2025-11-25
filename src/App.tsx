@@ -7,7 +7,7 @@ export default function App(): React.ReactNode
 
     return (
         <>
-            <EditorView width={10} height={10} />
+            <EditorView width={5} height={5} />
         </>
     );
 
