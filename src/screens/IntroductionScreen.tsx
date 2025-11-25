@@ -3,11 +3,13 @@ import classes from './IntroductionScreen.module.css';
 import PlayScreen from './PlayScreen';
 import { createConstraintsList } from '@/domain/play/constraint';
 import EditorScreen from './EditorScreen';
+import type { Navigation } from './navigation';
+import PlayLibraryScreen from './PlayLibraryScreen';
 
 
 interface Props
 {
-    setScreen: (screen: React.ReactNode) => void;
+    navigation: Navigation;
 }
 
 export default function IntroductionScreen(props: Props)
@@ -27,10 +29,10 @@ export default function IntroductionScreen(props: Props)
     function onPlay()
     {
         const screen = (
-            <PlayScreen puzzle={createPuzzle()} />
+            <PlayLibraryScreen navigation={props.navigation} />
         );
 
-        props.setScreen(screen);
+        props.navigation.switchTo(screen);
     }
 
     function onEdit()
@@ -39,26 +41,6 @@ export default function IntroductionScreen(props: Props)
             <EditorScreen width={10} height={10} />
         );
 
-        props.setScreen(screen);
+        props.navigation.switchTo(screen);
     }
-}
-
-function createPuzzle(): Puzzle
-{
-    const rowConstraints = createConstraintsList(
-        [1, 1],
-        [2],
-        [3],
-        [2],
-        [1],
-    );
-    const columnConstraints = createConstraintsList(
-        [1, 1],
-        [3, 1],
-        [3],
-        [2],
-        [1],
-    );
-
-    return Puzzle.create(rowConstraints, columnConstraints);
 }

@@ -1,0 +1,17 @@
+.library {
+    width: 50vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.libraryEntry {
+    user-select: none;
+    background-color: #88F;
+    margin: 5px;
+    padding: 1em;
+
+    &:hover {
+        background-color: #AAF;
+    }
+}
