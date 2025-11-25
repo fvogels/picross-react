@@ -5,10 +5,12 @@
 
 .horizontal {
     flex-direction: row;
+    height: 64px;
 }
 
 .vertical {
     flex-direction: column;
+    width: 64px;
 }
 
 .satisfied {
