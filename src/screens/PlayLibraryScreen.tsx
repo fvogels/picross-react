@@ -5,6 +5,7 @@ import PlayScreen from "./PlayScreen";
 import { Puzzle } from "@/domain/play/puzzle";
 import { PersistentList } from "@/util/list";
 import { Constraints } from "@/domain/play/constraint";
+import { useMemo } from "react";
 
 
 interface Props
@@ -14,15 +15,31 @@ interface Props
 
 export default function PlayLibraryScreen(props: Props): React.ReactNode
 {
+    const puzzleSizes = useMemo(() => determinePuzzleSizes(library), []);
+
     return (
         <>
             <button className={classes.backButton} onClick={onBack}>Back</button>
             <div className={classes.library}>
-                {library.map(renderPuzzle)}
+                {puzzleSizes.map(renderPuzzlesWithSize)}
             </div>
         </>
     );
 
+
+    function renderPuzzlesWithSize([width, height]: [number, number]): React.ReactNode
+    {
+        const puzzles = library.filter(entry => entry.columnConstraints.length === width && entry.rowConstraints.length === height);
+
+        return (
+            <div className={classes.librarySection}>
+                <span className={classes.libraryHeader}>{width} &times; {height}</span>
+                <div className={classes.librarySectionEntries}>
+                    {puzzles.map(renderPuzzle)}
+                </div>
+            </div>
+        );
+    }
 
     function renderPuzzle(libraryEntry: LibraryEntry, index: number): React.ReactNode
     {
@@ -52,5 +69,23 @@ export default function PlayLibraryScreen(props: Props): React.ReactNode
     function onBack()
     {
         props.navigation.back();
+    }
+
+    function determinePuzzleSizes(libraryEntries: LibraryEntry[]): [number, number][]
+    {
+        const set = new Set<string>();
+
+        for ( const libraryEntry of libraryEntries )
+        {
+            const width = libraryEntry.columnConstraints.length;
+            const height = libraryEntry.rowConstraints.length;
+
+            set.add(`${width}x${height}`);
+        }
+
+        return [...set].map(s => {
+            const [w, h] = s.split('x');
+            return [parseInt(w), parseInt(h)];
+        });
     }
 }
