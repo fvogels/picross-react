@@ -9,6 +9,7 @@ import PuzzleView from "@/components/PuzzleView";
 import classes from './EditorScreen.module.css';
 import { AmbiguityChecker } from "@/domain/solve/ambiguity";
 import { Constraints as AmbiguityConstraints } from "@/domain/solve/constraint";
+import type { Navigation } from "./navigation";
 
 
 interface Props
