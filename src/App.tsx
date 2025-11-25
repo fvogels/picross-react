@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import './App.css';
-import EditorView from './components/EditorView';
-import PlayablePuzzleView from './components/PlayablePuzzleView';
+import EditorView from './screens/EditorView';
+import PlayablePuzzleView from './screens/PlayablePuzzleView';
 import { createConstraintsList } from './domain/play/constraint';
 import { Puzzle } from './domain/play/puzzle';
 

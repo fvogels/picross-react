@@ -1,9 +1,9 @@
 import type { Puzzle as DomainPuzzle } from "@/domain/play/puzzle"
 import { useState } from "react"
-import PuzzleView from "./PuzzleView";
+import PuzzleView from "../components/PuzzleView";
 import { positionsInRange } from "@/util";
 import type { Position } from "@/util/position";
-import type { Puzzle as ViewPuzzle } from "./PuzzleView";
+import type { Puzzle as ViewPuzzle } from "../components/PuzzleView";
 import classes from './PlayablePuzzleView.module.css';
 
 

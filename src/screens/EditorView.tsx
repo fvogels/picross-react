@@ -4,10 +4,9 @@ import type { Grid } from "@/util/grid";
 import { PersistentList, type List } from "@/util/list";
 import type { Position } from "@/util/position";
 import React, { useState } from "react";
-import type { Constraints as ViewConstraints } from "./ConstraintsView";
-import PuzzleView from "./PuzzleView";
-import sharedClasses from './shared.module.css';
-import editorViewclasses from './EditorView.module.css';
+import type { Constraints as ViewConstraints } from "../components/ConstraintsView";
+import PuzzleView from "../components/PuzzleView";
+import classes from './EditorView.module.css';
 import { AmbiguityChecker } from "@/domain/solve/ambiguity";
 import { Constraints as AmbiguityConstraints } from "@/domain/solve/constraint";
 
@@ -20,7 +19,6 @@ interface Props
 
 export default function EditorView(props: Props): React.ReactNode
 {
-    const classes = { ...sharedClasses, ...editorViewclasses };
     const [ editor, setEditor ] = useState(PuzzleEditor.create(props.width, props.height));
 
     const rowConstraints: List<ViewConstraints> = editor.rowConstraints.virtualMap(translateToViewConstraints);
