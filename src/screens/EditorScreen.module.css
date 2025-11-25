@@ -43,3 +43,9 @@
     flex-direction: column;
     justify-content: flex-start;
 }
+
+.backButton {
+    position: fixed;
+    top: 0;
+    right: 0;
+}

@@ -13,14 +13,16 @@ export default function App(): React.ReactNode
 
     function pushScreen(screen: React.ReactNode): void
     {
-        setScreenStack([...screenStack, screen]);
+        setScreenStack(s => [...s, screen]);
     }
 
     function popScreen(): void
     {
-        const newStack = [...screenStack];
-        newStack.pop();
-        setScreenStack(newStack);
+        setScreenStack((s: React.ReactNode[]) => {
+            const newStack = [...s];
+            newStack.pop();
+            return newStack;
+        } );
     }
 
     function createInitialScreen(): React.ReactNode

@@ -5,10 +5,12 @@ import { positionsInRange } from "@/util";
 import type { Position } from "@/util/position";
 import type { Puzzle as ViewPuzzle } from "@/components/PuzzleView";
 import classes from './PlayScreen.module.css';
+import type { Navigation } from "./navigation";
 
 
 interface Props
 {
+    navigation: Navigation;
     puzzle: DomainPuzzle;
 }
 
@@ -17,8 +19,11 @@ export default function PlayablePuzzleView(props: Props): React.ReactNode
     const [puzzle, setPuzzle] = useState(props.puzzle);
 
     return (
-        <PuzzleView puzzle={translate(puzzle)} onRangeSelected={onRangeSelected} />
-    )
+        <>
+            <button className={classes.backButton} onClick={onBack}>Back</button>
+            <PuzzleView puzzle={translate(puzzle)} onRangeSelected={onRangeSelected} />
+        </>
+    );
 
 
     function onRangeSelected(startPosition: Position, endPosition: Position, mode: 'filled' | 'empty' | 'unknown'): void
@@ -36,5 +41,10 @@ export default function PlayablePuzzleView(props: Props): React.ReactNode
         const grid = puzzle.grid.virtualMap(status => classes[status]);
 
         return { rowConstraints, columnConstraints, grid };
+    }
+
+    function onBack()
+    {
+        props.navigation.back();
     }
 }

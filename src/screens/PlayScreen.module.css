@@ -12,3 +12,9 @@
     background: #888;
     color: black;
 }
+
+.backButton {
+    position: fixed;
+    top: 0;
+    right: 0;
+}

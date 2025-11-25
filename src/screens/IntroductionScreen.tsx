@@ -38,7 +38,7 @@ export default function IntroductionScreen(props: Props)
     function onEdit()
     {
         const screen = (
-            <EditorScreen width={10} height={10} />
+            <EditorScreen width={10} height={10} navigation={props.navigation} />
         );
 
         props.navigation.switchTo(screen);

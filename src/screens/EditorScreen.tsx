@@ -13,6 +13,7 @@ import { Constraints as AmbiguityConstraints } from "@/domain/solve/constraint";
 
 interface Props
 {
+    navigation: Navigation;
     width: number;
     height: number;
 }
@@ -35,11 +36,14 @@ export default function EditorScreen(props: Props): React.ReactNode
     const puzzle = { grid, rowConstraints, columnConstraints };
 
     return (
-        <div className={classes.stack}>
-            <PuzzleView puzzle={puzzle} onRangeSelected={onRangeSelected} />
-            <button onClick={copyConstraintsToClipboard}>To clipboard</button>
-            <button onClick={resetGrid}>Reset</button>
-        </div>
+        <>
+            <button className={classes.backButton} onClick={onBack}>Back</button>
+            <div className={classes.stack}>
+                <PuzzleView puzzle={puzzle} onRangeSelected={onRangeSelected} />
+                <button onClick={copyConstraintsToClipboard}>To clipboard</button>
+                <button onClick={resetGrid}>Reset</button>
+            </div>
+        </>
     );
 
 
@@ -82,5 +86,10 @@ export default function EditorScreen(props: Props): React.ReactNode
     function resetGrid()
     {
         setEditor(PuzzleEditor.create(props.width, props.height));
+    }
+
+    function onBack()
+    {
+        props.navigation.back();
     }
 }

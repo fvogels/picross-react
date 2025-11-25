@@ -15,9 +15,12 @@ interface Props
 export default function PlayLibraryScreen(props: Props): React.ReactNode
 {
     return (
-        <div className={classes.library}>
-            {library.map(renderPuzzle)}
-        </div>
+        <>
+            <button className={classes.backButton} onClick={onBack}>Back</button>
+            <div className={classes.library}>
+                {library.map(renderPuzzle)}
+            </div>
+        </>
     );
 
 
@@ -40,9 +43,14 @@ export default function PlayLibraryScreen(props: Props): React.ReactNode
         const puzzle = Puzzle.create(rowConstraints, columnConstraints);
 
         const screen = (
-            <PlayScreen puzzle={puzzle} />
+            <PlayScreen puzzle={puzzle} navigation={props.navigation} />
         );
 
         props.navigation.switchTo(screen)
+    }
+
+    function onBack()
+    {
+        props.navigation.back();
     }
 }
