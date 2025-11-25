@@ -1,0 +1,14 @@
+.empty {
+    background: white;
+    color: #111;
+}
+
+.filled {
+    background: black;
+    color: white;
+}
+
+.unknown {
+    background: gray;
+    color: black;
+}

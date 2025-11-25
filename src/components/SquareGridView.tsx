@@ -4,6 +4,7 @@ import { Position } from "@/util/position";
 import React, { useMemo, useState } from "react";
 import GridView from "./GridView";
 import SquareView from "./SquareView";
+import classes from './SquareGridView.module.css';
 
 
 interface Props
@@ -48,10 +49,13 @@ export default function SquareGridView(props: Props): React.ReactNode
         const selectionIndex = indexer(position);
         const caption: string | undefined = selectionIndex === null ? undefined : `${selectionIndex + 1}`;
 
+        console.log(square);
+        console.log(classes);
+
         return (
             <React.Fragment key={position.x}>
                 <SquareView
-                    status={square}
+                    className={classes[square]}
                     caption={caption}
                     onLeftPressed={() => onStartSelection(position) }
                     onLeftDragged={() => onUpdateSelection(position) }

@@ -3,7 +3,7 @@ import classes from './SquareView.module.css';
 
 interface Props
 {
-    status: 'empty' | 'filled' | 'unknown';
+    className: string;
     caption?: string;
 
     onLeftPressed?: () => void;
@@ -19,7 +19,7 @@ export default function SquareView(props: Props): React.ReactNode
 {
     return (
         <div className={`${classes.outer}`} onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseEnter={onMouseEnter} draggable={false} onContextMenu={e => e.preventDefault()}>
-            <div className={`${classes.inner} ${classes[props.status]}`}>
+            <div className={`${classes.inner} ${props.className}`}>
                 {props.caption}
             </div>
         </div>
