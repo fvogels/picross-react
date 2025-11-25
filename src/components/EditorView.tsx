@@ -40,6 +40,7 @@ export default function EditorView(props: Props): React.ReactNode
         <div className={classes.stack}>
             <PuzzleView puzzle={puzzle} onRangeSelected={onRangeSelected} />
             <button onClick={copyConstraintsToClipboard}>To clipboard</button>
+            <button onClick={resetGrid}>Reset</button>
         </div>
     );
 
@@ -72,16 +73,16 @@ export default function EditorView(props: Props): React.ReactNode
         return AmbiguityConstraints.fromList(editorConstraints.asList());
     }
 
-    function stringOfConstraints(editorConstraints: List<EditorConstraints>): string
-    {
-        return '[' + editorConstraints.data.map(x => x.asString()).join(",") + ']';
-    }
-
     function copyConstraintsToClipboard()
     {
-        const rowConstraints = stringOfConstraints(editor.rowConstraints);
-        const columnConstraints = stringOfConstraints(editor.columnConstraints);
+        const rowConstraints = editor.rowConstraints.data.map(x => x.asList().data);
+        const columnConstraints = editor.columnConstraints.data.map(x => x.asList().data);
         const json = JSON.stringify({rowConstraints, columnConstraints});
         navigator.clipboard.writeText(json);
+    }
+
+    function resetGrid()
+    {
+        setEditor(PuzzleEditor.create(props.width, props.height));
     }
 }
