@@ -10,6 +10,7 @@ import classes from './SquareGridView.module.css';
 interface Props
 {
     grid: Grid<SquareStatus>;
+
     onRangeSelected?: (startPosition: Position, endPosition: Position, mode: 'empty' | 'filled' | 'unknown') => void;
 }
 
