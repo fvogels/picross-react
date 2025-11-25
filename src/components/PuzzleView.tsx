@@ -5,7 +5,6 @@ import React from "react";
 import type { Constraints } from "./ConstraintsView";
 import ConstraintsView from "./ConstraintsView";
 import classes from './PuzzleView.module.css';
-import type { SquareStatus } from "./SquareGridView";
 import SquareGridView from "./SquareGridView";
 
 
@@ -19,7 +18,7 @@ export interface Puzzle
 {
     rowConstraints: List<Constraints>;
     columnConstraints: List<Constraints>;
-    grid: Grid<SquareStatus>;
+    grid: Grid<string>;
 }
 
 export default function PuzzleView(props: Props): React.ReactNode

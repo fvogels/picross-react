@@ -1,42 +1,53 @@
+import { useMemo } from 'react';
 import './App.css';
 import EditorView from './components/EditorView';
+import PlayablePuzzleView from './components/PlayablePuzzleView';
+import { createConstraintsList } from './domain/play/constraint';
+import { Puzzle } from './domain/play/puzzle';
 
 
 export default function App(): React.ReactNode
 {
-
-    return (
-        <>
-            <EditorView width={5} height={5} />
-        </>
-    );
+    return playing();
 
 
-    // const puzzle = useMemo(createPuzzle, []);
+    function playing()
+    {
+        const puzzle = useMemo(createPuzzle, []);
 
-    // return (
-    //     <>
-    //         <PlayablePuzzleView puzzle={puzzle} />
-    //     </>
-    // );
+        return (
+            <>
+                <PlayablePuzzleView puzzle={puzzle} />
+            </>
+        );
+    }
+
+    function editing()
+    {
+        return (
+            <>
+                <EditorView width={5} height={5} />
+            </>
+        );
+    }
 }
 
-// function createPuzzle(): Puzzle
-// {
-//     const rowConstraints = createConstraintsList(
-//         [1, 1],
-//         [2],
-//         [3],
-//         [2],
-//         [1],
-//     );
-//     const columnConstraints = createConstraintsList(
-//         [1, 1],
-//         [3, 1],
-//         [3],
-//         [2],
-//         [1],
-//     );
+function createPuzzle(): Puzzle
+{
+    const rowConstraints = createConstraintsList(
+        [1, 1],
+        [2],
+        [3],
+        [2],
+        [1],
+    );
+    const columnConstraints = createConstraintsList(
+        [1, 1],
+        [3, 1],
+        [3],
+        [2],
+        [1],
+    );
 
-//     return Puzzle.create(rowConstraints, columnConstraints);
-// }
+    return Puzzle.create(rowConstraints, columnConstraints);
+}

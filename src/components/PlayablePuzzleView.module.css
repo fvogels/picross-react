@@ -1,0 +1,11 @@
+.filled {
+    background: black;
+}
+
+.empty {
+    background: white;
+}
+
+.unknown {
+    background: #888;
+}

@@ -1,13 +1,15 @@
-import type { Puzzle } from "@/domain/play/puzzle"
+import type { Puzzle as DomainPuzzle } from "@/domain/play/puzzle"
 import { useState } from "react"
 import PuzzleView from "./PuzzleView";
 import { positionsInRange } from "@/util";
 import type { Position } from "@/util/position";
+import type { Puzzle as ViewPuzzle } from "./PuzzleView";
+import classes from './PlayablePuzzleView.module.css';
 
 
 interface Props
 {
-    puzzle: Puzzle;
+    puzzle: DomainPuzzle;
 }
 
 export default function PlayablePuzzleView(props: Props): React.ReactNode
@@ -15,15 +17,24 @@ export default function PlayablePuzzleView(props: Props): React.ReactNode
     const [puzzle, setPuzzle] = useState(props.puzzle);
 
     return (
-        <PuzzleView puzzle={puzzle} onRangeSelected={onRangeSelected} />
+        <PuzzleView puzzle={translate(puzzle)} onRangeSelected={onRangeSelected} />
     )
 
 
     function onRangeSelected(startPosition: Position, endPosition: Position, mode: 'filled' | 'empty' | 'unknown'): void
     {
         const positions = positionsInRange(startPosition, endPosition);
-        const updatedPuzzle = positions.reduce<Puzzle>((puzzle: Puzzle, position: Position) => puzzle.update(position, mode), puzzle);
+        const updatedPuzzle = positions.reduce<DomainPuzzle>((puzzle: DomainPuzzle, position: Position) => puzzle.update(position, mode), puzzle);
 
         setPuzzle(updatedPuzzle);
+    }
+
+    function translate(puzzle: DomainPuzzle): ViewPuzzle
+    {
+        const rowConstraints = puzzle.rowConstraints;
+        const columnConstraints = puzzle.columnConstraints;
+        const grid = puzzle.grid.virtualMap(status => classes[status]);
+
+        return { rowConstraints, columnConstraints, grid };
     }
 }

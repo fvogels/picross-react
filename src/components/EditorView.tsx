@@ -6,7 +6,7 @@ import type { Position } from "@/util/position";
 import React, { useState } from "react";
 import type { Constraints as ViewConstraints } from "./ConstraintsView";
 import PuzzleView from "./PuzzleView";
-import type { SquareStatus } from "./SquareGridView";
+import classes from './EditorView.module.css';
 
 
 interface Props
@@ -19,7 +19,7 @@ export default function EditorView(props: Props): React.ReactNode
 {
     const [ editor, setEditor ] = useState(PuzzleEditor.create(props.width, props.height));
 
-    const grid: Grid<SquareStatus> = editor.grid;
+    const grid: Grid<string> = editor.grid.virtualMap(x => classes[x]);
     const rowConstraints: List<ViewConstraints> = editor.rowConstraints.virtualMap(translateConstraints);
     const columnConstraints: List<ViewConstraints> = editor.columnConstraints.virtualMap(translateConstraints);
     const puzzle = { grid, rowConstraints, columnConstraints };
