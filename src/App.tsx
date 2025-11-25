@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import './App.css';
-import EditorView from './screens/EditorView';
-import PlayablePuzzleView from './screens/PlayablePuzzleView';
+import EditorView from './screens/EditorScreen';
+import PlayablePuzzleView from './screens/PlayScreen';
 import { createConstraintsList } from './domain/play/constraint';
 import { Puzzle } from './domain/play/puzzle';
 
@@ -9,6 +9,7 @@ import { Puzzle } from './domain/play/puzzle';
 export default function App(): React.ReactNode
 {
     return editing();
+    // return playing();
 
 
     function playing()

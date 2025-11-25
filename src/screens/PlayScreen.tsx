@@ -3,8 +3,8 @@ import { useState } from "react"
 import PuzzleView from "../components/PuzzleView";
 import { positionsInRange } from "@/util";
 import type { Position } from "@/util/position";
-import type { Puzzle as ViewPuzzle } from "../components/PuzzleView";
-import classes from './PlayablePuzzleView.module.css';
+import type { Puzzle as ViewPuzzle } from "@/components/PuzzleView";
+import classes from './PlayScreen.module.css';
 
 
 interface Props

@@ -4,9 +4,9 @@ import type { Grid } from "@/util/grid";
 import { PersistentList, type List } from "@/util/list";
 import type { Position } from "@/util/position";
 import React, { useState } from "react";
-import type { Constraints as ViewConstraints } from "../components/ConstraintsView";
-import PuzzleView from "../components/PuzzleView";
-import classes from './EditorView.module.css';
+import type { Constraints as ViewConstraints } from "@/components/ConstraintsView";
+import PuzzleView from "@/components/PuzzleView";
+import classes from './EditorScreen.module.css';
 import { AmbiguityChecker } from "@/domain/solve/ambiguity";
 import { Constraints as AmbiguityConstraints } from "@/domain/solve/constraint";
 
