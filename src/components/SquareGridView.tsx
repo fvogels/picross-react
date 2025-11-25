@@ -49,9 +49,6 @@ export default function SquareGridView(props: Props): React.ReactNode
         const selectionIndex = indexer(position);
         const caption: string | undefined = selectionIndex === null ? undefined : `${selectionIndex + 1}`;
 
-        console.log(square);
-        console.log(classes);
-
         return (
             <React.Fragment key={position.x}>
                 <SquareView
