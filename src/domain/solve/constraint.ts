@@ -1,18 +1,23 @@
 import { repeat } from "@/util";
-import { type List } from "@/util/list";
+import { PersistentList, type List } from "@/util/list";
 import type { SquareStatus } from "./square";
 
 
 export class Constraints
 {
-    private readonly values: number[];
+    private readonly values: List<number>;
 
     static fromArray(values: number[])
     {
-        return new Constraints([...values]);
+        return this.fromList(PersistentList.fromArray(values));
     }
 
-    private constructor(values: number[])
+    static fromList(values: List<number>)
+    {
+        return new Constraints(values);
+    }
+
+    private constructor(values: List<number>)
     {
         this.values = values;
     }
@@ -47,7 +52,7 @@ export class Constraints
     private generateCompatible(compatibleWith: List<SquareStatus>): Iterable<('filled' | 'empty')[]>
     {
         const squares = compatibleWith.data;
-        const constraints = this.values;
+        const constraints = this.values.data;
         const array = repeat<'filled' | 'empty'>(squares.length, 'empty');
 
         return helper(0, 0);

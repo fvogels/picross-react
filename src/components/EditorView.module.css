@@ -30,3 +30,7 @@
 .empty {
     background: white;
 }
+
+.ambiguous {
+    border: 4px solid red;
+}

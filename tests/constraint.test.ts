@@ -1,5 +1,5 @@
-import type { SquareStatus } from '@/components/SquareGridView';
 import { Constraints, type Satisfaction } from '@/domain/play/constraint';
+import type { SquareStatus } from '@/domain/solve/square';
 import { PersistentList, type List } from '@/util/list';
 import { expect, test } from 'vitest';
 

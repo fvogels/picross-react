@@ -1,10 +1,10 @@
-import type { List } from "@/util/list";
+import { PersistentList, type List } from "@/util/list";
 import type { SquareStatus } from "./square";
 
 
 export class Constraints
 {
-    private readonly values: number[];
+    private readonly values: List<number>;
 
     static derive(squares: List<SquareStatus>)
     {
@@ -34,10 +34,10 @@ export class Constraints
             values.push(count);
         }
 
-        return new Constraints(values);
+        return new Constraints(PersistentList.fromArray(values));
     }
 
-    private constructor(values: number[])
+    private constructor(values: List<number>)
     {
         this.values = values;
     }
@@ -49,6 +49,16 @@ export class Constraints
 
     at(index: number): number
     {
-        return this.values[index];
+        return this.values.at(index);
+    }
+
+    asList(): List<number>
+    {
+        return this.values;
+    }
+
+    asString(): string
+    {
+        return '[' + this.values.data.map(x => `${x}`).join(",") + ']';
     }
 }

@@ -1,13 +1,14 @@
-import { PersistentGrid } from "@/util/grid";
+import { Grid, PersistentGrid } from "@/util/grid";
 import type { Constraints } from "./constraint";
-import type { Square } from "./square";
+import type { Square, SquareStatus } from "./square";
+import type { List } from "@/util/list";
 
 
 export class Solver
 {
-    private readonly rowConstraints: Constraints[];
+    private readonly rowConstraints: List<Constraints>;
 
-    private readonly columnConstraints: Constraints[];
+    private readonly columnConstraints: List<Constraints>;
 
     private readonly grid: PersistentGrid<Square>;
 
@@ -15,10 +16,10 @@ export class Solver
 
     private index: number;
 
-    constructor(rowConstraints: Constraints[], columnConstraints: Constraints[])
+    constructor(rowConstraints: List<Constraints>, columnConstraints: List<Constraints>)
     {
-        this.rowConstraints = [...rowConstraints];
-        this.columnConstraints = [...columnConstraints];
+        this.rowConstraints = rowConstraints;
+        this.columnConstraints = columnConstraints;
         this.grid = PersistentGrid.create<Square>(columnConstraints.length, rowConstraints.length, _ => ({ status: 'unknown' }));
         this.orientation = 'horizontal';
         this.index = 0;
@@ -32,7 +33,7 @@ export class Solver
         if ( this.orientation === 'horizontal' )
         {
             const row = this.grid.column(this.index);
-            const constraints = this.columnConstraints[this.index];
+            const constraints = this.columnConstraints.at(this.index);
             const updatedStatuses = constraints.refine(row.virtualMap(x => x.status));
 
             for ( let i = 0; i !== row.length; ++i )
@@ -52,7 +53,7 @@ export class Solver
         else
         {
             const column = this.grid.row(this.index);
-            const constraints = this.rowConstraints[this.index];
+            const constraints = this.rowConstraints.at(this.index);
             const updatedStatuses = constraints.refine(column.virtualMap(x => x.status));
 
             for ( let i = 0; i !== column.length; ++i )
@@ -108,5 +109,10 @@ export class Solver
         }
 
         return true;
+    }
+
+    get solution(): Grid<SquareStatus>
+    {
+        return this.grid.virtualMap(s => s.status);
     }
 }

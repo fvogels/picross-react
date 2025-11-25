@@ -8,7 +8,7 @@ import { Puzzle } from './domain/play/puzzle';
 
 export default function App(): React.ReactNode
 {
-    return playing();
+    return editing();
 
 
     function playing()
