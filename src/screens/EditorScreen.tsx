@@ -17,7 +17,7 @@ interface Props
     height: number;
 }
 
-export default function EditorView(props: Props): React.ReactNode
+export default function EditorScreen(props: Props): React.ReactNode
 {
     const [ editor, setEditor ] = useState(PuzzleEditor.create(props.width, props.height));
 
