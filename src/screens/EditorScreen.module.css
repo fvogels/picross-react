@@ -49,3 +49,14 @@
     top: 0;
     right: 0;
 }
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+    margin: 1em;
+}
+
+.button {
+    padding: 1em;
+}

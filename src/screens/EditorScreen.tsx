@@ -41,8 +41,10 @@ export default function EditorScreen(props: Props): React.ReactNode
             <button className={classes.backButton} onClick={onBack}>Back</button>
             <div className={classes.stack}>
                 <PuzzleView puzzle={puzzle} onRangeSelected={onRangeSelected} />
-                <button onClick={copyConstraintsToClipboard}>To clipboard</button>
-                <button onClick={resetGrid}>Reset</button>
+                <div className={classes.buttons}>
+                    <button onClick={copyConstraintsToClipboard} className={classes.button}>To clipboard</button>
+                    <button onClick={resetGrid} className={classes.button}>Reset</button>
+                </div>
             </div>
         </>
     );

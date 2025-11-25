@@ -1,8 +1,5 @@
-import { Puzzle } from '@/domain/play/puzzle';
-import classes from './IntroductionScreen.module.css';
-import PlayScreen from './PlayScreen';
-import { createConstraintsList } from '@/domain/play/constraint';
 import EditorScreen from './EditorScreen';
+import classes from './IntroductionScreen.module.css';
 import type { Navigation } from './navigation';
 import PlayLibraryScreen from './PlayLibraryScreen';
 
@@ -16,10 +13,10 @@ export default function IntroductionScreen(props: Props)
 {
     return (
         <div className={classes.stack}>
-            <button onClick={onPlay}>
+            <button onClick={onPlay} className={classes.button}>
                 Play
             </button>
-            <button onClick={onEdit}>
+            <button onClick={onEdit} className={classes.button}>
                 Create Puzzle
             </button>
         </div>
