@@ -13,7 +13,15 @@ export interface Puzzle
     columnConstraints: List<Constraints>;
 }
 
-export class PuzzleGenerator
+export function generate(width: number, height: number): Puzzle
+{
+    const generator = new PuzzleGenerator(width, height);
+    const grid = generator.result;
+    const { rowConstraints, columnConstraints } = Constraints.deriveAll(grid);
+    return { grid, rowConstraints, columnConstraints };
+}
+
+class PuzzleGenerator
 {
     readonly width: number;
 
