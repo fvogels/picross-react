@@ -46,7 +46,7 @@ class PuzzleGenerator
             this.addRandomGroup();
         }
 
-        while ( this.isCurrentGridAmbiguous() )
+        while ( !this.isSolvable() )
         {
             this.changeRandomSquare();
         }
@@ -122,11 +122,11 @@ class PuzzleGenerator
         return result;
     }
 
-    private isCurrentGridAmbiguous(): boolean
+    private isSolvable(): boolean
     {
         const { rowConstraints, columnConstraints } = Constraints.deriveAll(this.grid.virtualMap(s => s.status));
         const ambiguityChecker = new AmbiguityChecker(rowConstraints, columnConstraints);
-        return ambiguityChecker.ambiguities.every(x => !x);
+        return ambiguityChecker.isSolveable();
     }
 
     private randomPosition(): Position

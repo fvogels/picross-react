@@ -16,4 +16,9 @@ export class AmbiguityChecker
         this.solver.solve();
         this.ambiguities = this.solver.solution.virtualMap(s => s === 'unknown');
     }
+
+    isSolveable(): boolean
+    {
+        return this.ambiguities.every(x => !x);
+    }
 }
