@@ -17,21 +17,40 @@ interface Props
 export default function PlayablePuzzleView(props: Props): React.ReactNode
 {
     const [puzzle, setPuzzle] = useState(props.puzzle);
+    const isSolved = puzzle.isSolved();
 
     return (
         <>
             <button className={classes.backButton} onClick={onBack}>Back</button>
             <PuzzleView puzzle={translate(puzzle)} onRangeSelected={onRangeSelected} />
+            {renderSolvedMessage()}
         </>
     );
 
 
+    function renderSolvedMessage(): React.ReactNode
+    {
+        const classNames = [ classes.solvedMessage ];
+
+        if ( isSolved )
+        {
+            classNames.push(classes.solved);
+        }
+
+        return (
+            <div className={classNames.join(' ')}>Solved!</div>
+        );
+    }
+
     function onRangeSelected(startPosition: Position, endPosition: Position, mode: 'filled' | 'empty' | 'unknown'): void
     {
-        const positions = positionsInRange(startPosition, endPosition);
-        const updatedPuzzle = positions.reduce<DomainPuzzle>((puzzle: DomainPuzzle, position: Position) => puzzle.update(position, mode), puzzle);
+        if ( !isSolved )
+        {
+            const positions = positionsInRange(startPosition, endPosition);
+            const updatedPuzzle = positions.reduce<DomainPuzzle>((puzzle: DomainPuzzle, position: Position) => puzzle.update(position, mode), puzzle);
 
-        setPuzzle(updatedPuzzle);
+            setPuzzle(updatedPuzzle);
+        }
     }
 
     function translate(puzzle: DomainPuzzle): ViewPuzzle

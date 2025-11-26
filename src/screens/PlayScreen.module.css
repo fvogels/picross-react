@@ -18,3 +18,12 @@
     top: 0;
     right: 0;
 }
+
+.solvedMessage {
+    font-size: 500%;
+    visibility: hidden;
+}
+
+.solved {
+    visibility: visible;
+}
