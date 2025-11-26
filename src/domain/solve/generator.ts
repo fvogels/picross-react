@@ -114,9 +114,9 @@ class PuzzleGenerator
 
     private randomLength(): number
     {
-        let result = 0;
+        let result = 1;
 
-        result += this.randomInteger(1, Math.floor(this.width / 4));
+        result += this.randomInteger(0, Math.floor(this.width / 4));
         result += this.randomInteger(0, Math.floor(this.width / 4));
 
         return result;
