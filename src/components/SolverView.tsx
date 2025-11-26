@@ -20,15 +20,15 @@ interface Props
 export default function SolverView(props: Props): React.ReactNode
 {
     return (
-        <div className={classes.puzzleView}>
-            <div className={classes.grid}>
+        <div className={classes.solverView}>
+            <div className={classes.container}>
                 <SquareGridView grid={props.grid} />
-            </div>
-            <div className={classes.rowConstraints}>
-                {props.rowConstraints.data.map(renderRowConstraints)}
-            </div>
-            <div className={classes.columnConstraints}>
-                {props.columnConstraints.data.map(renderColumnConstraints)}
+                <div className={classes.rowConstraints}>
+                    {props.rowConstraints.data.map(renderRowConstraints)}
+                </div>
+                <div className={classes.columnConstraints}>
+                    {props.columnConstraints.data.map(renderColumnConstraints)}
+                </div>
             </div>
         </div>
     );
