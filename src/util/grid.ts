@@ -1,3 +1,4 @@
+import { range } from ".";
 import { PersistentList, VirtualList, type List } from "./list";
 import { Position } from "./position";
 
@@ -79,6 +80,11 @@ export abstract class Grid<T>
         }
 
         return result;
+    }
+
+    toArrays(): T[][]
+    {
+        return range(0, this.height).map(y => range(0, this.width).map(x => this.at(new Position(x, y))));
     }
 }
 

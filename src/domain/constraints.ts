@@ -1,7 +1,7 @@
+import { range, repeat } from "@/util";
 import type { Grid } from "@/util/grid";
 import { PersistentList, type List } from "@/util/list";
 import type { SquareStatus } from "./square";
-import { range, repeat } from "@/util";
 
 
 export class Constraints
@@ -52,6 +52,11 @@ export class Constraints
         return Constraints.fromList(PersistentList.fromArray(values));
     }
 
+    static fromArrays(values: number[][]): List<Constraints>
+    {
+        return PersistentList.create<Constraints>(values.length, i => Constraints.fromArray(values[i]));
+    }
+
     static fromList(values: List<number>)
     {
         return new Constraints(values);
@@ -65,6 +70,28 @@ export class Constraints
     asString(): string
     {
         return '[' + this.values.data.map(x => `${x}`).join(",") + ']';
+    }
+
+    replace(index: number, value: number): Constraints
+    {
+        return Constraints.fromList(this.values.replace(index, value));
+    }
+
+    update(index: number, transformer: (value: number) => number): Constraints
+    {
+        return this.replace(index, transformer(this.values.at(index)));
+    }
+
+    insert(index: number, value: number): Constraints
+    {
+        return Constraints.fromList(this.values.insert(index, value));
+    }
+
+    removeAt(index: number): Constraints
+    {
+        const values = [...this.values.data];
+        values.splice(index, 1);
+        return Constraints.fromArray(values);
     }
 
     refine(squares: List<SquareStatus | 'unknown'>): (SquareStatus | 'unknown')[]
@@ -89,6 +116,11 @@ export class Constraints
                     }
                 }
             }
+        }
+
+        if ( isFirst )
+        {
+            throw "no solutions!";
         }
 
         return result;

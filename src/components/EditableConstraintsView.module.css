@@ -1,0 +1,70 @@
+@keyframes growVerticalSeparator {
+    from { height: 5px; }
+    to { height: 50px; }
+}
+
+@keyframes growHorizontalSeparator {
+    from { width: 5px; }
+    to { width: 50px; }
+}
+
+.container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .separator {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #555;
+        position: relative;
+        color: transparent;
+    }
+
+    .separator:hover {
+        color: white;
+    }
+
+    .separator::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        bottom: -5px;
+        left: -5px;
+        right: -5px;
+        background: transparent;
+    }
+
+    &.horizontal {
+        flex-direction: row;
+        height: 64px;
+
+        .separator {
+            flex-direction: row;
+            width: 5px;
+            height: 32px;
+
+            &:hover {
+                animation: growHorizontalSeparator 50ms linear;
+                width: 50px;
+            }
+        }
+    }
+
+    &.vertical {
+        flex-direction: column;
+        width: 64px;
+
+        .separator {
+            flex-direction: column;
+            width: 32px;
+            height: 5px;
+
+            &:hover {
+                animation: growVerticalSeparator 50ms linear;
+                height: 50px;
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+.filled {
+    background-color: black;
+}
+
+.empty {
+    background-color: white;
+}
+
+.unknown {
+    background-color: #FAA;
+}
+
+.button {
+    margin: 1em;
+}

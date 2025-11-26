@@ -2,6 +2,7 @@ import EditorScreen from './EditorScreen';
 import classes from './IntroductionScreen.module.css';
 import type { Navigation } from './navigation';
 import PlayLibraryScreen from './PlayLibraryScreen';
+import SolverScreen from './SolverScreen';
 
 
 interface Props
@@ -18,6 +19,9 @@ export default function IntroductionScreen(props: Props)
             </button>
             <button onClick={onEdit} className={classes.button}>
                 Create Puzzle
+            </button>
+            <button onClick={onSolve} className={classes.button}>
+                Solve Puzzle
             </button>
         </div>
     );
@@ -37,6 +41,15 @@ export default function IntroductionScreen(props: Props)
         const screen = (
             <EditorScreen width={10} height={10} navigation={props.navigation} />
         );
+
+        props.navigation.switchTo(screen);
+    }
+
+    function onSolve()
+    {
+        const screen = (
+            <SolverScreen nagivation={props.navigation}  width={2} height={2} />
+        )
 
         props.navigation.switchTo(screen);
     }

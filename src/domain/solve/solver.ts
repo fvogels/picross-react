@@ -108,6 +108,8 @@ export class Solver
             unknownCount = newUnknownCount;
         }
 
+        this.finishPass();
+
         return true;
     }
 

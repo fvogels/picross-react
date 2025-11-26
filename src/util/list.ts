@@ -31,6 +31,34 @@ export abstract class List<T>
 
         return true;
     }
+
+    replace(index: number, value: T): PersistentList<T>
+    {
+        return PersistentList.create(this.length, i => i === index ? value : this.at(i));
+    }
+
+    insert(index: number, value: T): PersistentList<T>
+    {
+        return PersistentList.create(this.length + 1, i => {
+            if ( i < index )
+            {
+                return this.at(i);
+            }
+            else if ( i === index )
+            {
+                return value;
+            }
+            else
+            {
+                return this.at(i - 1);
+            }
+        });
+    }
+
+    updateArray(updater: (items: T[]) => T[]): List<T>
+    {
+        return PersistentList.fromArray(updater([...this.data]));
+    }
 }
 
 export class PersistentList<T> extends List<T>
