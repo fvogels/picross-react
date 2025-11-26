@@ -18,6 +18,19 @@ export abstract class List<T>
     {
         return PersistentList.create<T>(this.length, i => this.at(i));
     }
+
+    every(predicate: (item: T) => boolean): boolean
+    {
+        for ( let i = 0; i !== this.length; ++i )
+        {
+            if ( !predicate(this.at(i)) )
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
 
 export class PersistentList<T> extends List<T>
