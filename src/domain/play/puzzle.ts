@@ -46,4 +46,9 @@ export class Puzzle
     {
         return PlayConstraints.fromList(constraints.values);
     }
+
+    isSolved(): boolean
+    {
+        return this.rowConstraints.every(rowConstraint => rowConstraint.satisfaction === 'satisfied') && this.columnConstraints.every(columnConstraint => columnConstraint.satisfaction === 'satisfied');
+    }
 }
