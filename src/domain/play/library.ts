@@ -6,6 +6,10 @@ export interface LibraryEntry
 
 export const library: LibraryEntry[] = [
     {
+        rowConstraints: [[], [1], []],
+        columnConstraints: [[], [1], []],
+    },
+    {
         rowConstraints: [[5],[1,1],[1,1,1],[1,1],[5]],
         columnConstraints: [[5],[1,1],[1,1,1],[1,1],[5]]
     },
