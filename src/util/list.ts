@@ -13,6 +13,11 @@ export abstract class List<T>
     {
         return VirtualList.create<R>(this.length, i => transformer(this.at(i), i));
     }
+
+    force(): PersistentList<T>
+    {
+        return PersistentList.create<T>(this.length, i => this.at(i));
+    }
 }
 
 export class PersistentList<T> extends List<T>

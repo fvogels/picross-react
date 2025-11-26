@@ -11,21 +11,21 @@ export interface Constraint
 
 export type Satisfaction = 'satisfied' | 'unsatisfied' | 'violated';
 
-export class Constraints
+export class PlayConstraints
 {
     public readonly constraints: PersistentList<Constraint>;
 
     public readonly satisfaction: Satisfaction;
 
-    static fromArray(values: number[]): Constraints
+    static fromArray(values: number[]): PlayConstraints
     {
         const contents: PersistentList<Constraint> = PersistentList.fromArray(values.map(value => ({ value, satisfaction: 'unsatisfied' })));
         const satisfaction: Satisfaction = 'unsatisfied';
 
-        return new Constraints(contents, satisfaction);
+        return new PlayConstraints(contents, satisfaction);
     }
 
-    static fromList(values: List<number>): Constraints
+    static fromList(values: List<number>): PlayConstraints
     {
         return this.fromArray(values.data);
     }
@@ -36,7 +36,7 @@ export class Constraints
         this.satisfaction = satisfaction;
     }
 
-    updateSatisfaction(squares: List<SquareStatus>): Constraints
+    updateSatisfaction(squares: List<SquareStatus>): PlayConstraints
     {
         const { left, right, complete } = this.findIslands(squares);
         const updatedSatisfactions = repeat<Satisfaction>(this.constraints.length, 'unsatisfied')
@@ -85,7 +85,7 @@ export class Constraints
         }
 
         const updatedConstraints = PersistentList.create<Constraint>(this.constraints.length, i => ({value: this.constraints.at(i).value, satisfaction: updatedSatisfactions[i]}));
-        return new Constraints(updatedConstraints, updatedOverallSatisfaction);
+        return new PlayConstraints(updatedConstraints, updatedOverallSatisfaction);
     }
 
     private findIslands(squares: List<SquareStatus>): {left: number[], right: number[], complete: boolean}
@@ -145,8 +145,8 @@ export class Constraints
     }
 }
 
-export function createConstraintsList(...constraints: number[][]): PersistentList<Constraints>
+export function createConstraintsList(...constraints: number[][]): PersistentList<PlayConstraints>
 {
-    return PersistentList.fromArray(constraints.map(Constraints.fromArray));
+    return PersistentList.fromArray(constraints.map(PlayConstraints.fromArray));
 }
 

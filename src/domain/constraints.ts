@@ -49,7 +49,7 @@ export class Constraints
 
     static fromArray(values: number[])
     {
-        return this.fromList(PersistentList.fromArray(values));
+        return Constraints.fromList(PersistentList.fromArray(values));
     }
 
     static fromList(values: List<number>)

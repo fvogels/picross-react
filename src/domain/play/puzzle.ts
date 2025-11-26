@@ -1,29 +1,32 @@
-import { type PersistentList } from "@/util/list";
+import { List, type PersistentList } from "@/util/list";
 import { PersistentGrid } from "@/util/grid";
 import type { Position } from "@/util/position";
-import type { Constraints } from "./constraint";
+import { PlayConstraints } from "./constraint";
 import type { SquareStatus } from "./square";
+import type { Constraints } from "@/domain/constraints";
 
 
 export class Puzzle
 {
     public readonly grid: PersistentGrid<SquareStatus>;
 
-    public readonly rowConstraints: PersistentList<Constraints>;
+    public readonly rowConstraints: PersistentList<PlayConstraints>;
 
-    public readonly columnConstraints: PersistentList<Constraints>;
+    public readonly columnConstraints: PersistentList<PlayConstraints>;
 
-    static create(rowConstraints: PersistentList<Constraints>, columnConstraints: PersistentList<Constraints>)
+    static create(rowConstraints: List<Constraints>, columnConstraints: List<Constraints>)
     {
         const width = columnConstraints.length;
         const height = rowConstraints.length;
         const square: SquareStatus = 'unknown';
         const grid = PersistentGrid.create<SquareStatus>(width, height, _ => square);
+        const rowPlayConstraints = rowConstraints.virtualMap(Puzzle.translateToPlayConstraints).force();
+        const columnPlayConstraints = columnConstraints.virtualMap(Puzzle.translateToPlayConstraints).force();
 
-        return new Puzzle(grid, rowConstraints, columnConstraints);
+        return new Puzzle(grid, rowPlayConstraints, columnPlayConstraints);
     }
 
-    private constructor(grid: PersistentGrid<SquareStatus>, rowConstraints: PersistentList<Constraints>, columnConstraints: PersistentList<Constraints>)
+    private constructor(grid: PersistentGrid<SquareStatus>, rowConstraints: PersistentList<PlayConstraints>, columnConstraints: PersistentList<PlayConstraints>)
     {
         this.grid = grid;
         this.rowConstraints = rowConstraints;
@@ -37,5 +40,10 @@ export class Puzzle
         const updatedColumnConstraints = this.columnConstraints.update(position.x, c => c.updateSatisfaction(updatedGrid.column(position.x)));
 
         return new Puzzle(updatedGrid, updatedRowConstraints, updatedColumnConstraints);
+    }
+
+    private static translateToPlayConstraints(constraints: Constraints): PlayConstraints
+    {
+        return PlayConstraints.fromList(constraints.values);
     }
 }

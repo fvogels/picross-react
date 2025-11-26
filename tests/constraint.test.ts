@@ -1,4 +1,4 @@
-import { Constraints, type Satisfaction } from '@/domain/play/constraint';
+import { PlayConstraints, type Satisfaction } from '@/domain/play/constraint';
 import type { SquareStatus } from '@/domain/solve/square';
 import { PersistentList, type List } from '@/util/list';
 import { expect, test } from 'vitest';
@@ -64,7 +64,7 @@ test.each([
     [ [1,1], 'X.???', 'SU', 'U'],
     [ [1,1], 'X..??', 'SU', 'U'],
 ])('"%s".updateConstraints(%j)', (constraintsArray, rowString, satisfactions, overallSatisfaction) => {
-    const constraint = Constraints.fromArray(constraintsArray);
+    const constraint = PlayConstraints.fromArray(constraintsArray);
     const squares = parseRow(rowString);
     const updatedConstraint = constraint.updateSatisfaction(squares);
 

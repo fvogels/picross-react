@@ -4,9 +4,9 @@ import classes from './PlayLibraryScreen.module.css';
 import PlayScreen from "./PlayScreen";
 import { Puzzle } from "@/domain/play/puzzle";
 import { PersistentList } from "@/util/list";
-import { Constraints } from "@/domain/play/constraint";
 import { useMemo } from "react";
 import { generate } from "@/domain/solve/generator";
+import { Constraints } from "@/domain/constraints";
 
 
 interface Props
@@ -33,7 +33,7 @@ export default function PlayLibraryScreen(props: Props): React.ReactNode
         const puzzles = library.filter(entry => entry.columnConstraints.length === width && entry.rowConstraints.length === height);
 
         return (
-            <div className={classes.librarySection}>
+            <div className={classes.librarySection} key={`${width}x${height}`}>
                 <span className={classes.libraryHeader}>{width} &times; {height}</span>
                 <div className={classes.librarySectionEntries}>
                     {puzzles.map(renderPuzzle)}
@@ -67,12 +67,7 @@ export default function PlayLibraryScreen(props: Props): React.ReactNode
     function startGeneratedPuzzle(width: number, height: number): void
     {
         const { rowConstraints, columnConstraints } = generate(width, height);
-        const rowConstraints2: PersistentList<Constraints> = PersistentList.fromArray(rowConstraints.data.map(x => Constraints.fromList(x.values)));
-        const columnConstraints2: PersistentList<Constraints> = PersistentList.fromArray(columnConstraints.data.map(x => Constraints.fromList(x.values)));
-        const puzzle = Puzzle.create(rowConstraints2, columnConstraints2);
-
-        console.log(rowConstraints)
-        console.log(columnConstraints)
+        const puzzle = Puzzle.create(rowConstraints, columnConstraints);
 
         const screen = (
             <PlayScreen puzzle={puzzle} navigation={props.navigation} />
