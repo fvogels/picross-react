@@ -48,7 +48,7 @@ export default function IntroductionScreen(props: Props)
     function onSolve()
     {
         const screen = (
-            <SolverScreen nagivation={props.navigation}  width={2} height={2} />
+            <SolverScreen nagivation={props.navigation}  width={5} height={5} />
         )
 
         props.navigation.switchTo(screen);

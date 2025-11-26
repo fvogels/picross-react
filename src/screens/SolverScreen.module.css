@@ -13,3 +13,9 @@
 .button {
     margin: 1em;
 }
+
+.backButton {
+    position: fixed;
+    top: 0;
+    right: 0;
+}

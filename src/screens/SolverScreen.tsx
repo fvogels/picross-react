@@ -23,6 +23,7 @@ export default function SolverScreen(props: Props): React.ReactNode
 
     return (
         <>
+            <button className={classes.backButton} onClick={onBack}>Back</button>
             <SolverView grid={grid} columnConstraints={columnConstraints} rowConstraints={rowConstraints} onRowConstraintsUpdated={onRowConstraintsUpdated} onColumnConstraintsUpdated={onColumnConstraintsUpdated} />
             <button onClick={onSolve} className={classes.button}>Solve</button>
         </>
@@ -52,5 +53,10 @@ export default function SolverScreen(props: Props): React.ReactNode
         {
             setGrid(solver.solution.virtualMap(_ => classes.unknown))
         }
+    }
+
+    function onBack()
+    {
+        props.nagivation.back();
     }
 }
