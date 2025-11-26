@@ -16,6 +16,7 @@ export interface Puzzle
 export function generate(width: number, height: number): Puzzle
 {
     const generator = new PuzzleGenerator(width, height);
+    generator.generate();
     const grid = generator.result;
     const { rowConstraints, columnConstraints } = Constraints.deriveAll(grid);
     return { grid, rowConstraints, columnConstraints };
@@ -95,6 +96,7 @@ class PuzzleGenerator
             }
 
             this.grid.at(p).status = 'filled';
+            i++;
         }
     }
 
@@ -131,12 +133,18 @@ class PuzzleGenerator
     {
         const x = this.randomInteger(0, this.width);
         const y = this.randomInteger(0, this.height);
+        const position = new Position(x, y);
 
-        return new Position(x, y);
+        if ( !this.grid.isValidPosition(position) )
+        {
+            console.error(position);
+        }
+
+        return position;
     }
 
     private randomInteger(lower: number, upper: number): number
     {
-        return Math.ceil(Math.random() * (upper - lower) + lower);
+        return Math.floor(Math.random() * (upper - lower) + lower);
     }
 }

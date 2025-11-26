@@ -25,6 +25,11 @@ export class Constraints
         return new Constraints(contents, satisfaction);
     }
 
+    static fromList(values: List<number>): Constraints
+    {
+        return this.fromArray(values.data);
+    }
+
     constructor(constraints: PersistentList<Constraint>, satisfaction: Satisfaction)
     {
         this.constraints = constraints;
