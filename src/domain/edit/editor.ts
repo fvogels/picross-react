@@ -2,8 +2,8 @@ import { range } from "@/util";
 import { List, PersistentList } from "@/util/list";
 import { Grid, PersistentGrid } from "@/util/grid";
 import type { Position } from "@/util/position";
-import { Constraints } from "./constraint";
 import type { SquareStatus } from "./square";
+import { Constraints } from "@/domain/constraints";
 
 
 export class PuzzleEditor

@@ -1,4 +1,4 @@
-import { Constraints } from '@/domain/solve/constraint';
+import { Constraints } from '@/domain/constraints';
 import type { SquareStatus } from '@/domain/solve/square';
 import { PersistentList, type List } from '@/util/list';
 import { expect, test } from 'vitest';

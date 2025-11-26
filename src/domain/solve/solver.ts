@@ -1,5 +1,5 @@
 import { Grid, PersistentGrid } from "@/util/grid";
-import type { Constraints } from "./constraint";
+import type { Constraints } from "@/domain/constraints";
 import type { Square, SquareStatus } from "./square";
 import type { List } from "@/util/list";
 

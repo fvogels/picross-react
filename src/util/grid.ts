@@ -25,6 +25,11 @@ export abstract class Grid<T>
         return VirtualGrid.create(this.width, this.height, p => transformer(this.at(p), p));
     }
 
+    isValidPosition(position: Position): boolean
+    {
+        return 0 <= position.x && position.x < this.width && 0 <= position.y && position.y < this.height;
+    }
+
     get positions(): Iterable<Position>
     {
         const width = this.width;

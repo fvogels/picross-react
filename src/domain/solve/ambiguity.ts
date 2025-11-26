@@ -1,7 +1,7 @@
 import { Solver } from "./solver";
-import type { Constraints } from "./constraint";
 import type { Grid } from "@/util/grid";
 import type { List } from "@/util/list";
+import type { Constraints } from "@/domain/constraints";
 
 
 export class AmbiguityChecker

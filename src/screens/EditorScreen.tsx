@@ -1,4 +1,5 @@
-import { Constraints as EditorConstraints, PuzzleEditor } from "@/domain/edit";
+import { PuzzleEditor } from "@/domain/edit";
+import { Constraints } from "@/domain/constraints";
 import { positionsInRange } from "@/util";
 import type { Grid } from "@/util/grid";
 import { PersistentList, type List } from "@/util/list";
@@ -8,7 +9,6 @@ import type { Constraints as ViewConstraints } from "@/components/ConstraintsVie
 import PuzzleView from "@/components/PuzzleView";
 import classes from './EditorScreen.module.css';
 import { AmbiguityChecker } from "@/domain/solve/ambiguity";
-import { Constraints as AmbiguityConstraints } from "@/domain/solve/constraint";
 import type { Navigation } from "./navigation";
 
 
@@ -25,7 +25,7 @@ export default function EditorScreen(props: Props): React.ReactNode
 
     const rowConstraints: List<ViewConstraints> = editor.rowConstraints.virtualMap(translateToViewConstraints);
     const columnConstraints: List<ViewConstraints> = editor.columnConstraints.virtualMap(translateToViewConstraints);
-    const ambiguityChecker = new AmbiguityChecker(editor.rowConstraints.virtualMap(translateToAmbiguityConstraints), editor.columnConstraints.virtualMap(translateToAmbiguityConstraints));
+    const ambiguityChecker = new AmbiguityChecker(editor.rowConstraints, editor.columnConstraints);
     const grid: Grid<string> = editor.grid.virtualMap((square, position) => {
         let classNames = [ classes[square] ];
         if ( ambiguityChecker.ambiguities.at(position) )
@@ -65,23 +65,18 @@ export default function EditorScreen(props: Props): React.ReactNode
     }
 
 
-    function translateToViewConstraints(editorConstraints: EditorConstraints): ViewConstraints
+    function translateToViewConstraints(editorConstraints: Constraints): ViewConstraints
     {
         return {
-            constraints: PersistentList.create(editorConstraints.length, i => ({value: editorConstraints.at(i), satisfaction: 'satisfied'})),
+            constraints: PersistentList.create(editorConstraints.values.length, i => ({value: editorConstraints.values.at(i), satisfaction: 'satisfied'})),
             satisfaction: 'satisfied',
         };
     }
 
-    function translateToAmbiguityConstraints(editorConstraints: EditorConstraints): AmbiguityConstraints
-    {
-        return AmbiguityConstraints.fromList(editorConstraints.asList());
-    }
-
     function copyConstraintsToClipboard()
     {
-        const rowConstraints = editor.rowConstraints.data.map(x => x.asList().data);
-        const columnConstraints = editor.columnConstraints.data.map(x => x.asList().data);
+        const rowConstraints = editor.rowConstraints.data.map(x => x.values.data);
+        const columnConstraints = editor.columnConstraints.data.map(x => x.values.data);
         const json = JSON.stringify({rowConstraints, columnConstraints});
         navigator.clipboard.writeText(json);
     }
