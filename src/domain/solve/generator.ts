@@ -13,7 +13,7 @@ export interface Puzzle
     columnConstraints: List<Constraints>;
 }
 
-export function generate(width: number, height: number): Puzzle
+export function generateRandomPuzzle(width: number, height: number): Puzzle
 {
     const generator = new PuzzleGenerator(width, height);
     generator.generate();

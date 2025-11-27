@@ -5,7 +5,7 @@ import PlayScreen from "./PlayScreen";
 import { Puzzle } from "@/domain/play/puzzle";
 import { PersistentList } from "@/util/list";
 import { useMemo } from "react";
-import { generate } from "@/domain/solve/generator";
+import { generateRandomPuzzle } from "@/domain/solve/generator";
 import { Constraints } from "@/domain/constraints";
 
 
@@ -66,14 +66,14 @@ export default function PlayLibraryScreen(props: Props): React.ReactNode
 
     function startGeneratedPuzzle(width: number, height: number): void
     {
-        const { rowConstraints, columnConstraints } = generate(width, height);
+        const { rowConstraints, columnConstraints } = generateRandomPuzzle(width, height);
         const puzzle = Puzzle.create(rowConstraints, columnConstraints);
 
         const screen = (
             <PlayScreen puzzle={puzzle} navigation={props.navigation} />
         );
 
-        props.navigation.switchTo(screen)
+        props.navigation.switchTo(screen);
     }
 
     function startPuzzle(libraryEntry: LibraryEntry): void
