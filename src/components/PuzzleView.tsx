@@ -25,14 +25,14 @@ export default function PuzzleView(props: Props): React.ReactNode
 {
     return (
         <div className={classes.puzzleView}>
-            <div className={classes.grid}>
+            <div className={classes.container}>
                 <SquareGridView grid={props.puzzle.grid} onRangeSelected={props.onRangeSelected} />
-            </div>
-            <div className={classes.rowConstraints}>
-                {props.puzzle.rowConstraints.data.map(renderRowConstraints)}
-            </div>
-            <div className={classes.columnConstraints}>
-                {props.puzzle.columnConstraints.data.map(renderColumnConstraints)}
+                <div className={classes.rowConstraints}>
+                    {props.puzzle.rowConstraints.data.map(renderRowConstraints)}
+                </div>
+                <div className={classes.columnConstraints}>
+                    {props.puzzle.columnConstraints.data.map(renderColumnConstraints)}
+                </div>
             </div>
         </div>
     );

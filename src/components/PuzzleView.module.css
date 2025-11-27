@@ -1,24 +1,25 @@
 .puzzleView {
-    display: grid;
-    grid-template-columns: 2;
-    grid-template-rows: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .rowConstraints {
     display: flex;
     flex-direction: column;
-    grid-column: 1;
-    grid-row: 2;
+    position: absolute;
+    top: 0;
+    right: 100%;
 }
 
 .columnConstraints {
     display: flex;
     flex-direction: row;
-    grid-column: 2;
-    grid-row: 1;
+    position: absolute;
+    bottom: 100%;
+    left: 0;
 }
 
-.grid {
-    grid-column: 2;
-    grid-row: 2;
+.container {
+    position: relative;
 }
