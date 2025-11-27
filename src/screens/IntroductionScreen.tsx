@@ -1,3 +1,4 @@
+import { Button, Stack } from '@mantine/core';
 import EditorScreen from './EditorScreen';
 import classes from './IntroductionScreen.module.css';
 import type { Navigation } from './navigation';
@@ -15,7 +16,7 @@ export default function IntroductionScreen(props: Props)
     const sizes = [[5, 5], [10, 10], [15, 15]];
 
     return (
-        <div className={classes.stack}>
+        <Stack>
             <button onClick={onPlay} className={classes.playButton}>
                 Play
             </button>
@@ -23,7 +24,7 @@ export default function IntroductionScreen(props: Props)
             {renderCreatePuzzleButtons()}
             <div className={classes.header}>Solve Puzzle</div>
             {renderSolvePuzzleButtons()}
-        </div>
+        </Stack>
     );
 
 
