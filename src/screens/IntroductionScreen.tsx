@@ -12,20 +12,50 @@ interface Props
 
 export default function IntroductionScreen(props: Props)
 {
+    const sizes = [[5, 5], [10, 10], [15, 15]];
+
     return (
         <div className={classes.stack}>
-            <button onClick={onPlay} className={classes.button}>
+            <button onClick={onPlay} className={classes.playButton}>
                 Play
             </button>
-            <button onClick={onEdit} className={classes.button}>
-                Create Puzzle
-            </button>
-            <button onClick={onSolve} className={classes.button}>
-                Solve Puzzle
-            </button>
+            <div className={classes.header}>Create Puzzle</div>
+            {renderCreatePuzzleButtons()}
+            <div className={classes.header}>Solve Puzzle</div>
+            {renderSolvePuzzleButtons()}
         </div>
     );
 
+
+    function renderCreatePuzzleButtons(): React.ReactNode
+    {
+        return (
+            <div className={classes.buttonContainer}>
+                {
+                    sizes.map(([w, h]) => {
+                        return (
+                            <button className={classes.sizeButton} onClick={() => onEdit(w, h)}>{w}&times;{h}</button>
+                        );
+                    })
+                }
+            </div>
+        );
+    }
+
+    function renderSolvePuzzleButtons(): React.ReactNode
+    {
+        return (
+            <div className={classes.buttonContainer}>
+                {
+                    sizes.map(([w, h]) => {
+                        return (
+                            <button className={classes.sizeButton} onClick={() => onSolve(w, h)}>{w}&times;{h}</button>
+                        );
+                    })
+                }
+            </div>
+        );
+    }
 
     function onPlay()
     {
@@ -36,19 +66,19 @@ export default function IntroductionScreen(props: Props)
         props.navigation.switchTo(screen);
     }
 
-    function onEdit()
+    function onEdit(width: number, height: number)
     {
         const screen = (
-            <EditorScreen width={10} height={10} navigation={props.navigation} />
+            <EditorScreen width={width} height={height} navigation={props.navigation} />
         );
 
         props.navigation.switchTo(screen);
     }
 
-    function onSolve()
+    function onSolve(width: number, height: number)
     {
         const screen = (
-            <SolverScreen nagivation={props.navigation}  width={5} height={5} />
+            <SolverScreen nagivation={props.navigation}  width={width} height={height} />
         )
 
         props.navigation.switchTo(screen);
