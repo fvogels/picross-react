@@ -1,6 +1,6 @@
 # Picross Game
 
-Nonograms!
+Nonograms! Compiled version available [here](https://fvogels.github.io/picross-react/).
 
 Three modes are implemented:
 
