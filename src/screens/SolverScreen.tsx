@@ -2,7 +2,7 @@ import SolverView from "@/components/SolverView";
 import { Constraints } from "@/domain/constraints";
 import { Grid, PersistentGrid } from "@/util/grid";
 import { List, PersistentList } from "@/util/list";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { Navigation } from "./navigation";
 import { Solver } from "@/domain/solve/solver";
 import classes from './SolverScreen.module.css';
@@ -19,7 +19,8 @@ export default function SolverScreen(props: Props): React.ReactNode
 {
     const [columnConstraints, setColumnConstraints] = useState<List<Constraints>>(PersistentList.create(props.width, _ => Constraints.fromArray([])));
     const [rowConstraints, setRowConstraints] = useState<List<Constraints>>(PersistentList.create(props.height, _ => Constraints.fromArray([])));
-    const [grid, setGrid] = useState<Grid<string>>(PersistentGrid.create(props.width, props.height, _ => 'empty'));
+    const [grid, setGrid] = useState<Grid<string>>(PersistentGrid.create(props.width, props.height, _ => classes.unknown));
+    const timerId = useRef<number | null>(null);
 
     return (
         <>
@@ -33,30 +34,53 @@ export default function SolverScreen(props: Props): React.ReactNode
     function onRowConstraintsUpdated(index: number, updatedRowConstraints: Constraints): void
     {
         setRowConstraints(rc => rc.replace(index, updatedRowConstraints));
+        resetGrid();
     }
 
     function onColumnConstraintsUpdated(index: number, updatedColumnConstraints: Constraints): void
     {
         setColumnConstraints(rc => rc.replace(index, updatedColumnConstraints));
+        resetGrid();
     }
 
     function onSolve(): void
     {
         const solver = new Solver(rowConstraints, columnConstraints);
 
-        try
+        if ( timerId.current !== null )
         {
-            solver.solve();
-            setGrid(solver.solution.virtualMap(s => classes[s]));
+            clearTimeout(timerId.current);
         }
-        catch ( e )
+
+        timerId.current = setTimeout(delayedStep, 100);
+
+        function delayedStep()
         {
-            setGrid(solver.solution.virtualMap(_ => classes.unknown))
+            timerId.current = null;
+            setGrid(solver.solution.virtualMap(s => classes[s]));
+
+            if ( !solver.isSolved )
+            {
+                try
+                {
+                    solver.step();
+                    timerId.current = setTimeout(delayedStep, 250);
+                }
+                catch ( e )
+                {
+                    setGrid(PersistentGrid.create(props.width, props.height, _ => classes.unknown));
+                }
+            }
         }
     }
 
     function onBack()
     {
         props.nagivation.back();
+    }
+
+    function resetGrid()
+    {
+        setGrid(PersistentGrid.create(props.width, props.height, _ => classes.empty));
     }
 }

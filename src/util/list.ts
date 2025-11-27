@@ -59,6 +59,27 @@ export abstract class List<T>
     {
         return PersistentList.fromArray(updater([...this.data]));
     }
+
+    equalTo(other: List<T>, equality: (x: T, y: T) => boolean): boolean
+    {
+        if ( this.length !== other.length )
+        {
+            return false;
+        }
+
+        for ( let i = 0; i !== this.length; ++i )
+        {
+            const x = this.at(i);
+            const y = other.at(i);
+
+            if ( !equality(x, y) )
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
 
 export class PersistentList<T> extends List<T>

@@ -1,5 +1,5 @@
 import { Grid, PersistentGrid } from "@/util/grid";
-import type { Constraints } from "@/domain/constraints";
+import { Constraints } from "@/domain/constraints";
 import type { Square, SquareStatus } from "./square";
 import type { List } from "@/util/list";
 
@@ -82,7 +82,23 @@ export class Solver
 
     get isSolved(): boolean
     {
-        return this.grid.every(({status}) => status !== 'unknown');
+        if ( !this.grid.every(({status}) => status !== 'unknown') )
+        {
+            return false;
+        }
+
+        const cleanedUpGrid = this.grid.virtualMap(s => {
+            if ( s.status === 'unknown' )
+            {
+                throw "bug";
+            }
+
+            return s.status;
+        });
+
+        const { rowConstraints, columnConstraints } = Constraints.deriveAll(cleanedUpGrid);
+
+        return rowConstraints.equalTo(this.rowConstraints, (x, y) => x.equalTo(y)) && columnConstraints.equalTo(this.columnConstraints, (x, y) => x.equalTo(y));
     }
 
     get unknownCount(): number

@@ -67,6 +67,11 @@ export class Constraints
         this.values = values;
     }
 
+    equalTo(other: Constraints): boolean
+    {
+        return this.values.equalTo(other.values, (x, y) => x === y);
+    }
+
     asString(): string
     {
         return '[' + this.values.data.map(x => `${x}`).join(",") + ']';
