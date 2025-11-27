@@ -1,13 +1,11 @@
-import { Button, ButtonGroup, Group, Slider, Stack, Text, Title } from '@mantine/core';
-import EditorScreen from './EditorScreen';
-import classes from './IntroductionScreen.module.css';
-import type { Navigation } from './navigation';
-import PlayLibraryScreen from './PlayLibraryScreen';
-import SolverScreen from './SolverScreen';
-import { useState } from 'react';
-import PlayScreen from './PlayScreen';
-import { generateRandomPuzzle } from '@/domain/solve/generator';
 import { Puzzle } from '@/domain/play/puzzle';
+import { generateRandomPuzzle } from '@/domain/solve/generator';
+import { Button, Group, Slider, Stack, Text } from '@mantine/core';
+import { useState } from 'react';
+import EditorScreen from './EditorScreen';
+import type { Navigation } from './navigation';
+import PlayScreen from './PlayScreen';
+import SolverScreen from './SolverScreen';
 
 
 interface Props
@@ -19,7 +17,6 @@ export default function IntroductionScreen(props: Props)
 {
     const [ puzzleWidth, setPuzzleWidth ] = useState<number>(5);
     const [ puzzleHeight, setPuzzleHeight ] = useState<number>(5);
-    const sizes = [[5, 5], [10, 10], [15, 15]];
 
 
     return (
