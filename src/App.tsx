@@ -2,13 +2,18 @@ import { useState } from 'react';
 import './App.css';
 import IntroductionScreen from './screens/IntroductionScreen';
 import type { Navigation } from './screens/navigation';
+import { MantineProvider } from '@mantine/core';
 
 
 export default function App(): React.ReactNode
 {
     const [screenStack, setScreenStack] = useState<React.ReactNode[]>([ createInitialScreen() ])
 
-    return screenStack[screenStack.length-1];
+    return (
+        <MantineProvider  defaultColorScheme='dark'>
+            {screenStack[screenStack.length-1]}
+        </MantineProvider>
+    );
 
 
     function pushScreen(screen: React.ReactNode): void
