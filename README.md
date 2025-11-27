@@ -1,7 +1,8 @@
 # Picross Game
 
-Nonograms! Playable version available [here](https://fvogels.github.io/picross-react/).
+Nonograms! Hours of fun!
 
+layable version available [here](https://fvogels.github.io/picross-react/).
 
 Three modes are implemented:
 
