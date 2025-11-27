@@ -42,7 +42,7 @@ export default function IntroductionScreen(props: Props)
 
     function renderSizeSlider(caption: string, size: number, setter: (newValue: number) => void): React.ReactNode
     {
-        const marks = [5, 10, 15, 20].map(n => ({value: n, label: <>{n}</>}));
+        const marks = [5, 10, 15].map(n => ({value: n, label: <>{n}</>}));
 
         return (
             <Stack m='md'>
